@@ -1,6 +1,7 @@
 package org.macroprod.villagers.entity.careers;
 
 import net.minecraft.server.v1_11_R1.*;
+import org.bukkit.entity.Player;
 import org.macroprod.villagers.entity.BetterVillager;
 import org.macroprod.villagers.items.Contract;
 
@@ -31,7 +32,6 @@ public abstract class Career {
 
     public void setContract(Contract contract) {
         this.contract = contract;
-        if (contract.)
     }
 
     public abstract void goals();

@@ -179,7 +179,7 @@ public class BetterVillager extends EntityVillager {
                 if (recipe.getBuyItem3().getItem() == Items.PAPER) {
                     EntityHuman trader = this.getTrader();
                     if (trader != null) {
-                        career.setContract(new Contract(this, trader, recipe.getBuyItem3()));
+                        career.setContract(new Contract(this, trader.getUniqueID(), recipe.getBuyItem3()));
                         this.goalSelector.a(4, new PathFinderGoalFollowPlayer(this, trader.getUniqueID()));
                     }
                 }

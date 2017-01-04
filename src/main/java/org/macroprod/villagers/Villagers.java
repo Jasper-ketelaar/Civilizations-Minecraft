@@ -14,8 +14,11 @@ import org.macroprod.villagers.entity.CustomEntities;
  */
 public class Villagers extends JavaPlugin {
 
+    private static Villagers instance;
+
     @Override
     public void onEnable() {
+        instance = this;
         CustomEntities.registerEntities();
     }
 
@@ -30,7 +33,12 @@ public class Villagers extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        instance = null;
         CustomEntities.unregisterEntities();
+    }
+
+    public static Villagers getInstance() {
+        return instance;
     }
 
 }

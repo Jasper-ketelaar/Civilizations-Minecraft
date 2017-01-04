@@ -1,23 +1,27 @@
 package org.macroprod.villagers.entity.careers;
 
 import net.minecraft.server.v1_11_R1.*;
-import org.bukkit.entity.Player;
-import org.macroprod.villagers.entity.BetterVillager;
+import org.macroprod.villagers.entity.VillagerAdapter;
+import org.macroprod.villagers.task.Task;
+import org.macroprod.villagers.task.TaskHandler;
 import org.macroprod.villagers.items.Contract;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by jasperketelaar on 1/4/17.
  */
-public abstract class Career {
+public abstract class Villager {
 
     public static final int MINER = 6;
 
     private Contract contract;
 
-    protected final BetterVillager villager;
+    protected final VillagerAdapter villager;
     private final int career;
 
-    public Career(BetterVillager villager, int career) {
+    public Villager(VillagerAdapter villager, int career) {
         this.villager = villager;
         this.career = career;
     }
@@ -34,7 +38,16 @@ public abstract class Career {
         this.contract = contract;
     }
 
-    public abstract void goals();
+    public Contract getContract() {
+        return contract;
+    }
+
+    public final TaskHandler goals() {
+        Set<Task> instincts = new TreeSet<>();
+        return new TaskHandler(instincts, tasks());
+    }
+
+    public abstract Set<Task> tasks();
 
     public abstract MerchantRecipeList offers(EntityHuman human);
 
@@ -60,4 +73,6 @@ public abstract class Career {
         }
         return contractItem;
     }
+
+
 }

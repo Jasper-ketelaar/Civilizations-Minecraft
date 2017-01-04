@@ -1,4 +1,4 @@
-package org.macroprod.villagers.goal;
+package org.macroprod.villagers.task;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.PathfinderGoal;

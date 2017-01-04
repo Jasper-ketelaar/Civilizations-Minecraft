@@ -1,4 +1,4 @@
-package org.macroprod.villagers.goal;
+package org.macroprod.villagers.task;
 
 import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityCreature;
@@ -41,7 +41,7 @@ public class PathFinderGoalFollowPlayer extends PathfinderGoalStandard {
             double distance = distance(active.getChunkCoordinates(), entity.getChunkCoordinates());
             if (distance > 50) {
                 this.entity.setLocation(active.locX, active.locY, active.locZ, entity.yaw, entity.pitch);
-            } else if (distance > 10) {
+            } else if (distance > 3) {
                 this.entity.getNavigation().a(active.locX, active.locY, active.locZ, WALK_SPEED);
             }
         }

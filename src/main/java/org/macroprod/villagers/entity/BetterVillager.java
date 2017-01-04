@@ -2,7 +2,6 @@ package org.macroprod.villagers.entity;
 
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_11_R1.*;
-import org.bukkit.entity.HumanEntity;
 import org.macroprod.villagers.entity.careers.Career;
 import org.macroprod.villagers.entity.careers.Miner;
 import org.macroprod.villagers.goal.PathFinderGoalFollowPlayer;

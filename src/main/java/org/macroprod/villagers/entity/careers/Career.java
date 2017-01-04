@@ -31,6 +31,7 @@ public abstract class Career {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+        if (contract.)
     }
 
     public abstract void goals();
@@ -50,7 +51,7 @@ public abstract class Career {
             display.setString("Name", "Contract");
 
             NBTTagList lore = new NBTTagList();
-            lore.add(new NBTTagString("Contract for villager " + villager.getId()));
+            lore.add(new NBTTagString("Contract for Villager #" + villager.getId()));
             display.set("Lore", lore);
 
             tag.set("display", display);

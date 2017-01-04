@@ -17,7 +17,7 @@ public enum CustomEntities {
     /**
      * Specifies what entities to replace.
      */
-    MINING_VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, BetterVillager.class);
+    MINING_VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, VillagerAdapter.class);
 
     private String name;
     private int id;

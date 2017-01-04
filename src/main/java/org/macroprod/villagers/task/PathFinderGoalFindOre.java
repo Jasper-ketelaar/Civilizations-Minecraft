@@ -1,10 +1,6 @@
-package org.macroprod.villagers.goal;
+package org.macroprod.villagers.task;
 
 import net.minecraft.server.v1_11_R1.*;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.BlockState;
-import org.bukkit.entity.Entity;
 
 /**
  * Created by jasperketelaar on 1/4/17.

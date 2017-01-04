@@ -10,21 +10,19 @@ public abstract class Career {
     public static final int FARMER = 0;
     public static final int MINER = 6;
 
-    private final int profession;
+    private final int career;
     private final BetterVillager villager;
 
-    public Career(BetterVillager villager, int profession) {
+    public Career(BetterVillager villager, int career) {
         this.villager = villager;
-        this.profession = profession;
+        this.career = career;
     }
 
-    public abstract int getType();
+    public int getCareer() {
+        return this.career;
+    }
 
     public abstract void goals();
-
-    public int getProfession() {
-        return profession;
-    }
 
     public abstract String getName();
 }

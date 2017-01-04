@@ -12,11 +12,6 @@ public class Miner extends Career {
     }
 
     @Override
-    public int getType() {
-        return 0;
-    }
-
-    @Override
     public void goals() {
 
     }

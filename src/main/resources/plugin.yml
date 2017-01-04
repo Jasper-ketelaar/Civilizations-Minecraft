@@ -1,0 +1,10 @@
+name:  Villagers
+main:  org.macroprod.villagers.Villagers
+version: 1.0
+commands:
+  spawnminer:
+    description: Spawns a miner villager
+    usage: /<command>
+  reload:
+    description: Reloads the plugin
+    usage: /villagers <command>

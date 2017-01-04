@@ -2,8 +2,11 @@ package org.macroprod.villagers.entity;
 
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_11_R1.*;
+import org.bukkit.entity.HumanEntity;
 import org.macroprod.villagers.entity.careers.Career;
 import org.macroprod.villagers.entity.careers.Miner;
+import org.macroprod.villagers.goal.PathFinderGoalFollowPlayer;
+import org.macroprod.villagers.items.Contract;
 
 import javax.annotation.Nullable;
 import java.lang.reflect.Field;
@@ -37,7 +40,7 @@ public class BetterVillager extends EntityVillager {
          * - 4 = Butcher, Leather Worker
          * - 5 = Nitwit
          */
-        this.profession = random.nextInt(6);
+        this.profession = random.nextInt(1);
 
         switch (profession) {
             case 0:
@@ -46,7 +49,7 @@ public class BetterVillager extends EntityVillager {
                  * be a miner.
                  * May need to edit behavior of those.
                  */
-                if (random.nextDouble() > 0.8) {
+                if (random.nextDouble() > 0.1) {
                     this.career = new Miner(this);
                     break;
                 }
@@ -65,7 +68,7 @@ public class BetterVillager extends EntityVillager {
             try {
                 Field bJ = EntityVillager.class.getDeclaredField("bJ");
                 bJ.setAccessible(true);
-                
+
             } catch (NoSuchFieldException e) {
                 e.printStackTrace();
             }
@@ -106,6 +109,7 @@ public class BetterVillager extends EntityVillager {
 
     /**
      * Gets the profession defined by us for if it's required internally.
+     *
      * @return 'custom' profession
      */
     @Override
@@ -125,6 +129,7 @@ public class BetterVillager extends EntityVillager {
 
     /**
      * Create a custom name for our custom career if our villager has one.
+     *
      * @return
      */
     @Override
@@ -141,6 +146,62 @@ public class BetterVillager extends EntityVillager {
             return message;
         } else {
             return super.getScoreboardDisplayName();
+        }
+    }
+
+    /**
+     * Allow our custom careers to have sell custom items
+     *
+     * @param human
+     * @return trade list
+     */
+    @Override
+    public MerchantRecipeList getOffers(EntityHuman human) {
+        if (career != null) {
+            return career.offers(human);
+        } else {
+            return super.getOffers(human);
+        }
+    }
+
+    /**
+     * Method that is executed when a recipe is purchased. Used to
+     *
+     * @param recipe
+     */
+    @Override
+    public void a(MerchantRecipe recipe) {
+        if (career != null) {
+            if (!career.hasContract()) {
+                if (recipe.getBuyItem1().getItem() == Items.EMERALD) {
+                    this.riches += recipe.getBuyItem1().getCount();
+                }
+
+                if (recipe.getBuyItem3().getItem() == Items.PAPER) {
+                    EntityHuman trader = this.getTrader();
+                    if (trader != null) {
+                        career.setContract(new Contract(this, trader, recipe.getBuyItem3()));
+                        this.goalSelector.a(4, new PathFinderGoalFollowPlayer(this, trader.getUniqueID()));
+                    }
+                }
+            }
+
+        } else {
+            super.a(recipe);
+        }
+    }
+
+    /**
+     * Override what happens on right click
+     * @param human the human clicking
+     * @param hand the hand of the human
+     */
+    @Override
+    public boolean a(EntityHuman human, EnumHand hand) {
+        if (career != null && human != null && career.hasContract()) {
+            return false;
+        } else {
+            return super.a(human, hand);
         }
     }
 

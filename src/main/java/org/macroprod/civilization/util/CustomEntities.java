@@ -5,6 +5,8 @@ import net.minecraft.server.v1_11_R1.EntityVillager;
 import net.minecraft.server.v1_11_R1.MinecraftKey;
 import net.minecraft.server.v1_11_R1.RegistryMaterials;
 import org.bukkit.entity.EntityType;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.macroprod.civilization.resident.types.Settler;
 
 import java.lang.reflect.Field;

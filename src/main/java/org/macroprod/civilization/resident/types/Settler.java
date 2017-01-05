@@ -26,16 +26,18 @@ public class Settler extends Resident {
 
     @Override
     public MerchantRecipeList getOffers(EntityHuman human) {
-        return null;
+        return new MerchantRecipeList();
     }
 
     @Override
     public LinkedList<Task> tasks() {
-        return null;
+        LinkedList<Task> tasks = new LinkedList<>();
+
+        return tasks;
     }
 
     @Override
     public String getName() {
-        return null;
+        return "";
     }
 }

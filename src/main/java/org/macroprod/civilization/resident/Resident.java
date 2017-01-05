@@ -4,6 +4,7 @@ import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.types.tasks.Task;
 import org.macroprod.civilization.resident.types.tasks.TaskHandler;
+import org.macroprod.civilization.resident.types.tasks.instincts.WatchInstinct;
 
 import java.util.LinkedList;
 
@@ -14,6 +15,7 @@ public abstract class Resident extends ResidentAdapter {
 
     public Resident(World world) {
         super(world);
+        goalSelector.a(0, handler());
     }
 
     public abstract int getCareer();
@@ -29,6 +31,7 @@ public abstract class Resident extends ResidentAdapter {
     @Override
     public IChatBaseComponent getScoreboardDisplayName() {
         String name = getName();
+
         ChatMessage message = new ChatMessage(name, new Object[0]);
         message.getChatModifier().setChatHoverable(this.bn());
         message.getChatModifier().setInsertion(this.bf());
@@ -88,13 +91,26 @@ public abstract class Resident extends ResidentAdapter {
      * Creates a tasks handler that'll handle this resident's behaviour
      */
     public final TaskHandler handler() {
-        //TODO: Implement instincts
-        LinkedList<Task> instincts = new LinkedList<>();
-        return new TaskHandler(instincts, tasks());
+        return new TaskHandler(instincts(), tasks());
     }
 
+    /**
+     * Creates instincts list
+     */
+    private LinkedList<Task> instincts() {
+        LinkedList<Task> instincts = new LinkedList<>();
+        instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
+        return instincts;
+    }
+
+    /**
+     * Characteristics of the resident
+     */
     public abstract LinkedList<Task> tasks();
 
+    /**
+     * Resident name
+     */
     public abstract String getName();
 
 }

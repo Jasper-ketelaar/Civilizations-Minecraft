@@ -13,10 +13,9 @@ import org.macroprod.civilization.resident.types.tasks.Task;
  */
 public class WatchInstinct extends Task {
 
-    private Entity closest;
-
     private final Class<? extends Entity> cls;
     private final float distance;
+    private Entity closest;
 
     public WatchInstinct(Resident resident, Class<? extends Entity> cls, float distance) {
         super(resident);
@@ -26,7 +25,8 @@ public class WatchInstinct extends Task {
 
     @Override
     public void run() {
-
+        this.resident.getControllerLook().a(closest.locX, closest.locY + closest.getHeadHeight(), closest.locZ,
+                this.resident.cL(), this.resident.N());
     }
 
     @Override

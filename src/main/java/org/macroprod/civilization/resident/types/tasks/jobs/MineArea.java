@@ -1,4 +1,4 @@
-package org.macroprod.civilization.resident.types.tasks.tasks;
+package org.macroprod.civilization.resident.types.tasks.jobs;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.PathEntity;

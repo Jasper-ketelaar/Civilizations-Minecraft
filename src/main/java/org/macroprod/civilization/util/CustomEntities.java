@@ -16,9 +16,9 @@ import java.util.Set;
 public enum CustomEntities {
 
     /**
-     * Replace the default minecraft civilization with our simpleton settlers
+     * Replace the default Minecraft civilization with our simpleton settlers
      */
-    MINING_VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, Settler.class);
+    VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, Settler.class);
 
     private String name;
     private int id;

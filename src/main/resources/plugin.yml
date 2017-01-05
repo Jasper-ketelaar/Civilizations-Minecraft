@@ -8,3 +8,5 @@ commands:
   reload:
     description: Reloads the plugin
     usage: /civilization <command>
+  break:
+    description: test

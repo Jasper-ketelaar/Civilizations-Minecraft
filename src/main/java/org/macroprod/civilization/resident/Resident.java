@@ -1,7 +1,9 @@
 package org.macroprod.civilization.resident;
 
 import net.minecraft.server.v1_11_R1.*;
+import org.bukkit.Bukkit;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
+import org.macroprod.civilization.resident.inventory.ResidentInventory;
 import org.macroprod.civilization.resident.types.tasks.Task;
 import org.macroprod.civilization.resident.types.tasks.TaskHandler;
 import org.macroprod.civilization.resident.types.tasks.instincts.WatchInstinct;
@@ -13,9 +15,12 @@ import java.util.LinkedList;
  */
 public abstract class Resident extends ResidentAdapter {
 
+    private final ResidentInventory inventory;
+
     public Resident(World world) {
         super(world);
         goalSelector.a(0, handler());
+        this.inventory = new ResidentInventory();
     }
 
     public abstract int getCareer();
@@ -39,11 +44,13 @@ public abstract class Resident extends ResidentAdapter {
         if (base != null) {
             message.getChatModifier().setColor(base.m());
         }
+
         return message;
     }
 
     /**
      * Method forwarded from our adapter that is invoked upon purchasing a recipe
+     *
      * @param recipe
      */
     public void purchase(MerchantRecipe recipe) {
@@ -52,11 +59,18 @@ public abstract class Resident extends ResidentAdapter {
 
     /**
      * Method forwarded from our adapter that is invoked upon interaction from a human entity
+     *
      * @param human the entity instance
-     * @param hand the hand that was used to interact
+     * @param hand  the hand that was used to interact
      * @return
      */
     public boolean interact(EntityHuman human, EnumHand hand) {
+        if (human instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) human;
+            if (Bukkit.getServer().getPlayer(player.getUniqueID()).isOp()) {
+                human.openContainer(inventory);
+            }
+        }
         return false;
     }
 
@@ -69,6 +83,7 @@ public abstract class Resident extends ResidentAdapter {
 
     /**
      * Method for retrieving the Resident's attack target. Checks last damaged by and how long since attack.
+     *
      * @return attack target as {@link EntityLiving}
      */
     public EntityLiving getAttackTarget() {
@@ -104,6 +119,13 @@ public abstract class Resident extends ResidentAdapter {
     }
 
     /**
+     * Gets inventory
+     */
+    public ResidentInventory getInventory() {
+        return this.inventory;
+    }
+
+    /**
      * Characteristics of the resident
      */
     public abstract LinkedList<Task> tasks();
@@ -112,5 +134,21 @@ public abstract class Resident extends ResidentAdapter {
      * Resident name
      */
     public abstract String getName();
+
+    /**
+     * Is called when an entity item is near by the Resident
+     *
+     * @param eItem the item on the ground
+     */
+    public void pickup(EntityItem eItem) {
+        ItemStack is = eItem.getItemStack();
+        ItemStack is1 = inventory.addItemStack(is);
+        if (is1 == null) {
+            eItem.die();
+        } else {
+            is.setCount(is1.getCount());
+        }
+
+    }
 
 }

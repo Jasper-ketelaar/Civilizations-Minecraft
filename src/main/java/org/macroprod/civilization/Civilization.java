@@ -1,7 +1,10 @@
 package org.macroprod.civilization;
 
+import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.World;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
@@ -27,8 +30,8 @@ public class Civilization extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] opts) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            World world = ((CraftWorld)player.getWorld()).getHandle();
             if (label.equalsIgnoreCase("settler")) {
-                World world = ((CraftWorld)player.getWorld()).getHandle();
                 Settler settler = new Settler(world);
                 Location location = player.getLocation();
                 settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());

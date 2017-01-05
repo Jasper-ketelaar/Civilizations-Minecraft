@@ -90,5 +90,20 @@ public abstract class ResidentAdapter extends EntityVillager {
         return forward.isMating();
     }
 
+    /**
+     * Forwards to {@link Resident#getInventory()}
+     */
+    @Override
+    public InventorySubcontainer dm() {
+        return forward.getInventory();
+    }
+
+    /**
+     * Forwards to {@link Resident#pickup(EntityItem item)}
+     */
+    @Override
+    protected void a(EntityItem eItem) {
+        forward.pickup(eItem);
+    }
 
 }

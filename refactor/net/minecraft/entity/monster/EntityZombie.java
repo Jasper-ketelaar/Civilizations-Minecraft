@@ -143,7 +143,7 @@ public class EntityZombie extends EntityMob
     }
 
     /**
-     * Sets or removes EntityAIBreakDoor task
+     * Sets or removes EntityAIBreakDoor tasks
      */
     public void setBreakDoorsAItask(boolean enabled)
     {

@@ -4,7 +4,7 @@ import net.minecraft.server.v1_11_R1.EntityHuman;
 import net.minecraft.server.v1_11_R1.MerchantRecipeList;
 import net.minecraft.server.v1_11_R1.World;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.task.Task;
+import org.macroprod.civilization.resident.types.tasks.Task;
 
 import java.util.LinkedList;
 

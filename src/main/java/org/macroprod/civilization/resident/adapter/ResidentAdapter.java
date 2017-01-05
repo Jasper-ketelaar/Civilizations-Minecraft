@@ -28,7 +28,7 @@ public abstract class ResidentAdapter extends EntityVillager {
     }
 
     /**
-     * Method to clear target and task selectors
+     * Method to clear target and tasks selectors
      */
     private void clear() {
         try {
@@ -67,8 +67,7 @@ public abstract class ResidentAdapter extends EntityVillager {
 
 
     /**
-     * Method that is executed when a recipe is purchased.
-     * Forwarded to our properly named method purchase.
+     * Forwards to {@link Resident#purchase(MerchantRecipe)}
      */
     @Override
     public void a(MerchantRecipe recipe) {
@@ -76,14 +75,19 @@ public abstract class ResidentAdapter extends EntityVillager {
     }
 
     /**
-     * Override what happens on right click
-     *
-     * @param human the human clicking
-     * @param hand  the hand of the human
+     * Forwards to {@link Resident#interact(EntityHuman, EnumHand)}
      */
     @Override
     public boolean a(EntityHuman human, EnumHand hand) {
         return forward.interact(human, hand);
+    }
+
+    /**
+     * Forwards to {@link Resident#isMating()}
+     */
+    @Override
+    public boolean di() {
+        return forward.isMating();
     }
 
 

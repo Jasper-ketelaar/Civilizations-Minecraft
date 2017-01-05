@@ -37,7 +37,7 @@ public class EntityAIOcelotSit extends EntityAIMoveToBlock
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
@@ -46,7 +46,7 @@ public class EntityAIOcelotSit extends EntityAIMoveToBlock
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
@@ -55,7 +55,7 @@ public class EntityAIOcelotSit extends EntityAIMoveToBlock
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

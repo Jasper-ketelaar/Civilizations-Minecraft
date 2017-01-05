@@ -22,7 +22,7 @@ public abstract class EntityAIBase
     }
 
     /**
-     * Determine if this AI Task is interruptible by a higher (= lower value) priority task. All vanilla AITask have
+     * Determine if this AI Task is interruptible by a higher (= lower value) priority tasks. All vanilla AITask have
      * this value set to true.
      */
     public boolean isInterruptible()
@@ -31,21 +31,21 @@ public abstract class EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

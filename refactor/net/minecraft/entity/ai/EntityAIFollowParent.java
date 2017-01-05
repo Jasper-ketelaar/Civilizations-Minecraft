@@ -83,7 +83,7 @@ public class EntityAIFollowParent extends EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
@@ -91,7 +91,7 @@ public class EntityAIFollowParent extends EntityAIBase
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
@@ -99,7 +99,7 @@ public class EntityAIFollowParent extends EntityAIBase
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

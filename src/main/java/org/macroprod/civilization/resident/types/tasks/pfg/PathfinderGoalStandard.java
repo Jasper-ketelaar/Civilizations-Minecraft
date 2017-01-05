@@ -1,4 +1,4 @@
-package org.macroprod.civilization.task.pfg;
+package org.macroprod.civilization.resident.types.tasks.pfg;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.PathfinderGoal;

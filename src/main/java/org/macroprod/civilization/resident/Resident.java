@@ -2,8 +2,8 @@ package org.macroprod.civilization.resident;
 
 import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
-import org.macroprod.civilization.task.Task;
-import org.macroprod.civilization.task.TaskHandler;
+import org.macroprod.civilization.resident.types.tasks.Task;
+import org.macroprod.civilization.resident.types.tasks.TaskHandler;
 
 import java.util.LinkedList;
 
@@ -54,8 +54,28 @@ public abstract class Resident extends ResidentAdapter {
      * @return
      */
     public boolean interact(EntityHuman human, EnumHand hand) {
-
         return false;
+    }
+
+    /**
+     * Method forwarded from our adapter that checks whether or not a resident is mating
+     */
+    public boolean isMating() {
+        return false;
+    }
+
+    /**
+     * Method for retrieving the Resident's attack target. Checks last damaged by and how long since attack.
+     * @return attack target as {@link EntityLiving}
+     */
+    public EntityLiving getAttackTarget() {
+        EntityLiving lastDamaged = this.getLastDamager();
+        if (lastDamaged != null && lastDamaged.isAlive()) {
+            if ((this.ticksLived - this.hurtTimestamp) < 80) {
+                return lastDamaged;
+            }
+        }
+        return null;
     }
 
     /**
@@ -65,7 +85,7 @@ public abstract class Resident extends ResidentAdapter {
     public abstract MerchantRecipeList getOffers(EntityHuman human);
 
     /**
-     * Creates a task handler that'll handle this resident's behaviour
+     * Creates a tasks handler that'll handle this resident's behaviour
      */
     public final TaskHandler handler() {
         //TODO: Implement instincts

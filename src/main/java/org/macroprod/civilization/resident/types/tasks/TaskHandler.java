@@ -1,4 +1,4 @@
-package org.macroprod.civilization.task;
+package org.macroprod.civilization.resident.types.tasks;
 
 import net.minecraft.server.v1_11_R1.PathfinderGoal;
 

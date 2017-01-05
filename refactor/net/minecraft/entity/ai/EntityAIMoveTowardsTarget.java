@@ -14,7 +14,7 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
     private final double speed;
 
     /**
-     * If the distance to the target entity is further than this, this AI task will not run.
+     * If the distance to the target entity is further than this, this AI tasks will not run.
      */
     private final float maxTargetDistance;
 
@@ -68,7 +68,7 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
@@ -76,7 +76,7 @@ public class EntityAIMoveTowardsTarget extends EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {

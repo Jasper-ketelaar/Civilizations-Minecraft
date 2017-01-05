@@ -3,7 +3,7 @@ package org.macroprod.civilization.resident.types;
 import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.items.Contract;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.task.Task;
+import org.macroprod.civilization.resident.types.tasks.Task;
 
 import java.util.LinkedList;
 

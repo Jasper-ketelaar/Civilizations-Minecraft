@@ -9,7 +9,7 @@ public abstract class EntityAIMoveToBlock extends EntityAIBase
     private final EntityCreature theEntity;
     private final double movementSpeed;
 
-    /** Controls task execution delay */
+    /** Controls tasks execution delay */
     protected int runDelay;
     private int timeoutCounter;
     private int maxStayTicks;
@@ -53,7 +53,7 @@ public abstract class EntityAIMoveToBlock extends EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
@@ -63,14 +63,14 @@ public abstract class EntityAIMoveToBlock extends EntityAIBase
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

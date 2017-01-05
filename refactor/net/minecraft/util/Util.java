@@ -24,11 +24,11 @@ public class Util
         }
         catch (ExecutionException executionexception)
         {
-            logger.fatal((String)"Error executing task", (Throwable)executionexception);
+            logger.fatal((String)"Error executing tasks", (Throwable)executionexception);
         }
         catch (InterruptedException interruptedexception)
         {
-            logger.fatal((String)"Error executing task", (Throwable)interruptedexception);
+            logger.fatal((String)"Error executing tasks", (Throwable)interruptedexception);
         }
 
         return (V)null;

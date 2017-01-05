@@ -15,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 
 public abstract class EntityAITarget extends EntityAIBase
 {
-    /** The entity that this task belongs to */
+    /** The entity that this tasks belongs to */
     protected final EntityCreature taskOwner;
 
     /**
@@ -131,7 +131,7 @@ public abstract class EntityAITarget extends EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
@@ -141,7 +141,7 @@ public abstract class EntityAITarget extends EntityAIBase
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {

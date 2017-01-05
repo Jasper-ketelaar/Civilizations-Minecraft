@@ -48,7 +48,7 @@ public class EntityOcelot extends EntityTameable
     private EntityAIAvoidEntity<EntityPlayer> avoidEntity;
 
     /**
-     * The tempt AI task for this mob, used to prevent taming while it is fleeing.
+     * The tempt AI tasks for this mob, used to prevent taming while it is fleeing.
      */
     private EntityAITempt aiTempt;
 

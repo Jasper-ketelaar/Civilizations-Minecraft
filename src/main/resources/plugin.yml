@@ -1,5 +1,5 @@
-name:  Villagers
-main:  org.macroprod.villagers.Villagers
+name:  Civilization
+main:  org.macroprod.civilizationion.Civilization
 version: 1.0
 commands:
   spawnminer:
@@ -7,4 +7,4 @@ commands:
     usage: /<command>
   reload:
     description: Reloads the plugin
-    usage: /villagers <command>
+    usage: /civilization <command>

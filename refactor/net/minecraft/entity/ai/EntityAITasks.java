@@ -26,7 +26,7 @@ public class EntityAITasks
     }
 
     /**
-     * Add a now AITask. Args : priority, task
+     * Add a now AITask. Args : priority, tasks
      */
     public void addTask(int priority, EntityAIBase task)
     {
@@ -34,7 +34,7 @@ public class EntityAITasks
     }
 
     /**
-     * removes the indicated task from the entity's AI tasks.
+     * removes the indicated tasks from the entity's AI tasks.
      */
     public void removeTask(EntityAIBase task)
     {

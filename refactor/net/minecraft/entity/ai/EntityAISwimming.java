@@ -23,7 +23,7 @@ public class EntityAISwimming extends EntityAIBase
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

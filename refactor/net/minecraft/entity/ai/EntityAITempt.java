@@ -39,7 +39,7 @@ public class EntityAITempt extends EntityAIBase
      */
     private int delayTemptCounter;
 
-    /** True if this EntityAITempt task is running */
+    /** True if this EntityAITempt tasks is running */
     private boolean isRunning;
     private final Set<Item> temptItem;
 
@@ -123,7 +123,7 @@ public class EntityAITempt extends EntityAIBase
     }
 
     /**
-     * Execute a one shot task or start executing a continuous task
+     * Execute a one shot tasks or start executing a continuous tasks
      */
     public void startExecuting()
     {
@@ -134,7 +134,7 @@ public class EntityAITempt extends EntityAIBase
     }
 
     /**
-     * Resets the task
+     * Resets the tasks
      */
     public void resetTask()
     {
@@ -145,7 +145,7 @@ public class EntityAITempt extends EntityAIBase
     }
 
     /**
-     * Updates the task
+     * Updates the tasks
      */
     public void updateTask()
     {

@@ -569,7 +569,7 @@ public class Village
     }
 
     /**
-     * Return whether villagers mating refractory period has passed
+     * Return whether civilization mating refractory period has passed
      */
     public boolean isMatingSeason()
     {

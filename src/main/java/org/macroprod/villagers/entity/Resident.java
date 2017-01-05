@@ -1,27 +1,27 @@
-package org.macroprod.villagers.entity.careers;
+package org.macroprod.villagers.entity;
 
 import net.minecraft.server.v1_11_R1.*;
-import org.macroprod.villagers.entity.VillagerAdapter;
+import org.macroprod.villagers.entity.adapters.ResidentAdapter;
 import org.macroprod.villagers.task.Task;
 import org.macroprod.villagers.task.TaskHandler;
 import org.macroprod.villagers.items.Contract;
 
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by jasperketelaar on 1/4/17.
  */
-public abstract class Villager {
+public abstract class Resident extends ResidentAdapter {
 
     public static final int MINER = 6;
 
     private Contract contract;
 
-    protected final VillagerAdapter villager;
+    protected final ResidentAdapter villager;
     private final int career;
 
-    public Villager(VillagerAdapter villager, int career) {
+    public Resident(ResidentAdapter villager, int career) {
         this.villager = villager;
         this.career = career;
     }
@@ -43,11 +43,11 @@ public abstract class Villager {
     }
 
     public final TaskHandler goals() {
-        Set<Task> instincts = new TreeSet<>();
+        ArrayList<Task> instincts = new ArrayList<>();
         return new TaskHandler(instincts, tasks());
     }
 
-    public abstract Set<Task> tasks();
+    public abstract List<Task> tasks();
 
     public abstract MerchantRecipeList offers(EntityHuman human);
 
@@ -64,7 +64,7 @@ public abstract class Villager {
             display.setString("Name", "Contract");
 
             NBTTagList lore = new NBTTagList();
-            lore.add(new NBTTagString("Contract for Villager #" + villager.getId()));
+            lore.add(new NBTTagString("Contract for Resident #" + villager.getId()));
             display.set("Lore", lore);
 
             tag.set("display", display);

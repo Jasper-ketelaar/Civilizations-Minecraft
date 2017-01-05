@@ -1,11 +1,11 @@
-package org.macroprod.villagers.entity;
+package org.macroprod.villagers.entity.adapters;
 
 import com.google.common.collect.Sets;
 import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.craftbukkit.v1_11_R1.inventory.CraftItemStack;
-import org.macroprod.villagers.entity.careers.Villager;
+import org.macroprod.villagers.entity.careers.Resident;
 import org.macroprod.villagers.entity.careers.Miner;
-import org.macroprod.villagers.task.PathFinderGoalFollowPlayer;
+import org.macroprod.villagers.task.pfg.PathFinderGoalFollowPlayer;
 import org.macroprod.villagers.items.Contract;
 
 import javax.annotation.Nullable;
@@ -14,21 +14,23 @@ import java.lang.reflect.Field;
 /**
  * Created by jasperketelaar on 1/4/17.
  */
-public class VillagerAdapter extends EntityVillager {
+public class ResidentAdapter extends EntityVillager {
 
     private PathfinderGoal currentGoal;
 
     /**
      * Custom career
      */
-    private final Villager career;
+    private final Resident career;
 
     /**
-     * Redefined profession
+     * Redefined appearance
      */
-    private final int profession;
+    private final int appearance;
 
-    public VillagerAdapter(World world) {
+
+
+    public ResidentAdapter(World world) {
         super(world);
 
         /**
@@ -42,9 +44,9 @@ public class VillagerAdapter extends EntityVillager {
          * - 4 = Butcher, Leather Worker
          * - 5 = Nitwit
          */
-        this.profession = random.nextInt(1);
+        this.appearance = random.nextInt(1);
 
-        switch (profession) {
+        switch (appearance) {
             case 0:
                 /**
                  * 4 careers already registered (farmer, fisher, shepherd, fletcher) therefore .2 chance to
@@ -111,22 +113,22 @@ public class VillagerAdapter extends EntityVillager {
     }
 
     /**
-     * Gets the profession defined by us for if it's required internally.
+     * Gets the appearance defined by us for if it's required internally.
      *
-     * @return 'custom' profession
+     * @return 'custom' appearance
      */
     @Override
     public int getProfession() {
-        return this.profession;
+        return this.appearance;
     }
 
     /**
-     * Remove functionality so profession can't be changed by library
+     * Remove functionality so appearance can't be changed by library
      */
     @Override
     public void setProfession(int profession) {
-        if (super.getProfession() != this.profession) {
-            super.setProfession(this.profession);
+        if (super.getProfession() != this.appearance) {
+            super.setProfession(this.appearance);
         }
     }
 
@@ -170,7 +172,7 @@ public class VillagerAdapter extends EntityVillager {
     /**
      * Method that is executed when a recipe is purchased. Used to
      *
-     * TODO: Forward this to Villager
+     * TODO: Forward this to Resident
      * @param recipe
      */
     @Override
@@ -199,7 +201,7 @@ public class VillagerAdapter extends EntityVillager {
     /**
      * Override what happens on right click
      *
-     * TODO: Forward to Villager
+     * TODO: Forward to Resident
      *
      * @param human the human clicking
      * @param hand  the hand of the human
@@ -211,19 +213,19 @@ public class VillagerAdapter extends EntityVillager {
             if (contract.getItem().getTag().equals(human.getItemInMainHand().getTag())) {
                 org.bukkit.block.Block first;
                 if ((first = contract.getFirst()) == null) {
-                    human.sendMessage(new ChatMessage("§4[Villager] You haven't defined the first position yet"));
+                    human.sendMessage(new ChatMessage("§4[Resident] You haven't defined the first position yet"));
                     return false;
                 }
 
                 if (contract.getSecond() == null) {
-                    human.sendMessage(new ChatMessage("§4[Villager] You haven't defined the second position yet"));
+                    human.sendMessage(new ChatMessage("§4[Resident] You haven't defined the second position yet"));
                     return false;
                 }
 
                 for (org.bukkit.inventory.ItemStack stack : human.getBukkitEntity().getInventory()) {
                     if (stack != null && contract.getItem().getTag().equals(CraftItemStack.asNMSCopy(stack).getTag())) {
                         human.getBukkitEntity().getInventory().remove(stack);
-                        human.sendMessage(new ChatMessage("§2[Villager] Placing my chests, put in emeralds to get me started"));
+                        human.sendMessage(new ChatMessage("§2[Resident] Placing my chests, put in emeralds to get me started"));
                         navigation.a(first.getX(), first.getY(), first.getZ());
 
                         break;

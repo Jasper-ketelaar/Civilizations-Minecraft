@@ -27,3 +27,8 @@ and communicate.
 21. Define what profession can do what exactly (can a settler build a chest)
 22. Figure out what requirements we need for breeding
 23. Find out how to actually build structures
+24. Town hall size/chest overflow
+25. When do we want to start trading
+26. How do we decide when we need to request help from other villagers
+27. Figure out currency (is it going to be an actual currency early on or just resource trading)
+28. Classify materials

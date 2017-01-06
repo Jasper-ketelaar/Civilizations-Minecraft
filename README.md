@@ -3,7 +3,7 @@ A plugin that completely overhauls the villagers system and turns it into more o
 grow from dirt to ultimately entire cities. Allows villagers to perform more actions
 and communicate. 
 
-## Todo lsit
+## Todo list
 1. Figuring out a way to provide context for methods
 2. Creating wrappers for classes we require clear access to
 3. Improve navigation for bigger distances

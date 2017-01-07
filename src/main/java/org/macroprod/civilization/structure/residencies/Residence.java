@@ -5,28 +5,28 @@ import org.macroprod.civilization.structure.City;
 import org.macroprod.civilization.util.FlatBlockArea;
 
 public abstract class Residence {
-    private final City parent;
 
+    private final City parent;
     private final FlatBlockArea spacialAllocation;
 
 
     public Residence(final City parent, final BlockPosition base, int width, int length) {
         this.parent = parent;
-        spacialAllocation = new FlatBlockArea(base, width +  (2 * PATH_SIZE), length + (2 * PATH_SIZE));
+        this.spacialAllocation = new FlatBlockArea(base, width +  (2 * City.PATH_SIZE), length + (2 * City.PATH_SIZE));
     }
 
     /**
      * Validates the dimension before path area is applied
      */
     private boolean isValidDimension(int dimension) {
-        return dimension >= PLOT_SIZE && (dimension + PATH_SIZE) % RESIDENCE_MULTIPLIER == 0;
+        return dimension >= City.PLOT_SIZE && (dimension + City.PATH_SIZE) % City.GRID_CELL_SIZE == 0;
     }
 
     /**
      * Validates that plot is being built on a valid grid point
      */
-    private boolean validPlotLocation(final BlockPosition position) {
-        final BlockPosition origin = parent.getOrigin();
-        return (origin.getX() - position.getX()) % RESIDENCE_MULTIPLIER == 0 && (origin.getZ() - position.getZ()) % RESIDENCE_MULTIPLIER == 0;
+    private boolean validPlotLocation(BlockPosition position) {
+        BlockPosition origin = parent.getOrigin();
+        return (origin.getX() - position.getX()) % City.GRID_CELL_SIZE == 0 && (origin.getZ() - position.getZ()) % City.GRID_CELL_SIZE == 0;
     }
 }

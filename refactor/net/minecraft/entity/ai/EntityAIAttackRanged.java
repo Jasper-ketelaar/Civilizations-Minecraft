@@ -85,7 +85,7 @@ public class EntityAIAttackRanged extends EntityAIBase
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
@@ -95,7 +95,7 @@ public class EntityAIAttackRanged extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

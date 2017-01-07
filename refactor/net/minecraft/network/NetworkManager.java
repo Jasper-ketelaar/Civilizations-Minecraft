@@ -216,7 +216,7 @@ public class NetworkManager extends SimpleChannelInboundHandler < Packet<? >>
 
     /**
      * Will commit the packet to the channel. If the current thread 'owns' the channel it will write and flush the
-     * packet, otherwise it will add a tasks for the channel eventloop thread to do that.
+     * packet, otherwise it will add a behaviour for the channel eventloop thread to do that.
      */
     private void dispatchPacket(final Packet<?> inPacket, @Nullable final GenericFutureListener <? extends Future <? super Void >> [] futureListeners)
     {

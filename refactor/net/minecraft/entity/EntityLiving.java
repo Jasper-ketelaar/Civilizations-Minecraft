@@ -73,10 +73,10 @@ public abstract class EntityLiving extends EntityLivingBase
     private final EntityBodyHelper bodyHelper;
     protected PathNavigate navigator;
 
-    /** Passive tasks (wandering, look, idle, ...) */
+    /** Passive behaviour (wandering, look, idle, ...) */
     protected final EntityAITasks tasks;
 
-    /** Fighting tasks (used by monsters, wolves, ocelots) */
+    /** Fighting behaviour (used by monsters, wolves, ocelots) */
     protected final EntityAITasks targetTasks;
 
     /** The active target the Task system uses for tracking */

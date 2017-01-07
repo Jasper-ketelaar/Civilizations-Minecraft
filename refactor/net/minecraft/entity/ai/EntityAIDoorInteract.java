@@ -19,7 +19,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     protected BlockDoor doorBlock;
 
     /**
-     * If is true then the Entity has stopped Door Interaction and compoleted the tasks.
+     * If is true then the Entity has stopped Door Interaction and compoleted the behaviour.
      */
     boolean hasStoppedDoorInteraction;
     float entityPositionX;
@@ -87,7 +87,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -97,7 +97,7 @@ public abstract class EntityAIDoorInteract extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

@@ -69,7 +69,7 @@ public class EntityAIWander extends EntityAIBase
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -77,7 +77,7 @@ public class EntityAIWander extends EntityAIBase
     }
 
     /**
-     * Makes tasks to bypass chance
+     * Makes behaviour to bypass chance
      */
     public void makeUpdate()
     {
@@ -85,7 +85,7 @@ public class EntityAIWander extends EntityAIBase
     }
 
     /**
-     * Changes tasks random possibility for execution
+     * Changes behaviour random possibility for execution
      */
     public void setExecutionChance(int newchance)
     {

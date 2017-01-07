@@ -92,7 +92,7 @@ public class ChunkRenderDispatcher
                     }
                     catch (InterruptedException var8)
                     {
-                        LOGGER.warn("Skipped tasks due to interrupt");
+                        LOGGER.warn("Skipped behaviour due to interrupt");
                     }
                 }
             }

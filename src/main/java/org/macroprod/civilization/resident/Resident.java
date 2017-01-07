@@ -4,11 +4,10 @@ import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.Bukkit;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
-import org.macroprod.civilization.resident.types.tasks.Task;
-import org.macroprod.civilization.resident.types.tasks.TaskHandler;
-import org.macroprod.civilization.resident.types.tasks.instincts.WatchInstinct;
+import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.jobs.TaskHandler;
+import org.macroprod.civilization.jobs.instincts.WatchInstinct;
 
-import javax.annotation.Nullable;
 import java.util.LinkedList;
 
 /**
@@ -105,7 +104,7 @@ public abstract class Resident extends ResidentAdapter {
     public abstract MerchantRecipeList getOffers(EntityHuman human);
 
     /**
-     * Creates a tasks handler that'll handle this resident's behaviour
+     * Creates a behaviour handler that'll handle this resident's behaviour
      */
     public final TaskHandler handler() {
         return new TaskHandler(instincts(), tasks());

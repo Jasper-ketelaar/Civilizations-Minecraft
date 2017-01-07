@@ -120,11 +120,11 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     protected final Proxy serverProxy;
 
     /**
-     * The tasks the server is currently working on(and will output on outputPercentRemaining).
+     * The behaviour the server is currently working on(and will output on outputPercentRemaining).
      */
     public String currentTask;
 
-    /** The percentage of the current tasks finished so far. */
+    /** The percentage of the current behaviour finished so far. */
     public int percentDone;
 
     /** True if the server is in online mode. */
@@ -413,7 +413,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
     }
 
     /**
-     * Set current tasks to null and set its percentage to 0.
+     * Set current behaviour to null and set its percentage to 0.
      */
     protected void clearCurrentTask()
     {
@@ -735,7 +735,7 @@ public abstract class MinecraftServer implements Runnable, ICommandSender, IThre
 
     public void updateTimeLightAndEntities()
     {
-        this.theProfiler.startSection("jobs");
+        this.theProfiler.startSection("behaviour");
 
         synchronized (this.futureTaskQueue)
         {

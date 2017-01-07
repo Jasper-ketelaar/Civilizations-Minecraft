@@ -59,7 +59,7 @@ public class EntityAIMate extends EntityAIBase
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
@@ -68,7 +68,7 @@ public class EntityAIMate extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

@@ -30,7 +30,7 @@ public class EntityAISkeletonRiders extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

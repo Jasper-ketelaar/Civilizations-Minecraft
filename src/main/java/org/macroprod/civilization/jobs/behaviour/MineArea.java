@@ -1,10 +1,10 @@
-package org.macroprod.civilization.resident.types.tasks.jobs;
+package org.macroprod.civilization.jobs.behaviour;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.resident.types.tasks.Task;
+import org.macroprod.civilization.jobs.Task;
 import org.macroprod.civilization.util.FlatBlockArea;
 
 import java.util.LinkedList;

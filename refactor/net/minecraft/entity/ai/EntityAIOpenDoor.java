@@ -28,7 +28,7 @@ public class EntityAIOpenDoor extends EntityAIDoorInteract
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -37,7 +37,7 @@ public class EntityAIOpenDoor extends EntityAIDoorInteract
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
@@ -48,7 +48,7 @@ public class EntityAIOpenDoor extends EntityAIDoorInteract
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

@@ -45,7 +45,7 @@ public class EntityAIOcelotAttack extends EntityAIBase
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
@@ -54,7 +54,7 @@ public class EntityAIOcelotAttack extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

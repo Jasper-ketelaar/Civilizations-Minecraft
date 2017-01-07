@@ -21,7 +21,7 @@ public class EntityAIVillagerInteract extends EntityAIWatchClosest2
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -38,7 +38,7 @@ public class EntityAIVillagerInteract extends EntityAIWatchClosest2
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

@@ -116,7 +116,7 @@ public class EntityAINearestAttackableTarget<T extends EntityLivingBase> extends
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {

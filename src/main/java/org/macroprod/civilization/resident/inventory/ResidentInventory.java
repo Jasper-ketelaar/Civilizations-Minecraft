@@ -8,7 +8,9 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.macroprod.civilization.resident.Resident;
 
+import javax.swing.text.html.HTMLDocument;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
@@ -28,4 +30,26 @@ public class ResidentInventory extends InventorySubcontainer {
         return super.a(item);
     }
 
+    /**
+     * Careful not to name this item due to needing items later...
+     * @param block
+     * @return
+     */
+    public boolean hasBlock(Block block) {
+        return hasItem(Item.getItemOf(block));
+    }
+
+    public boolean hasItem(Item item) {
+        return getStacksOfItem(item).size() > 0;
+    }
+
+    public List<ItemStack> getStacksOfItem(Item item) {
+        List<ItemStack> items = getContents();
+        List<ItemStack> result = new LinkedList<>();
+        for(ItemStack is : items) {
+            if(Item.getId(item) == Item.getId(is.getItem()))
+                result.add(is);
+        }
+        return result;
+    }
 }

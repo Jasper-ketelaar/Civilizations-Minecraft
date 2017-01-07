@@ -1,7 +1,8 @@
 package org.macroprod.civilization.resident.types.tasks.jobs;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.PathEntity;
+import net.minecraft.server.v1_11_R1.Blocks;
+import net.minecraft.server.v1_11_R1.World;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.resident.types.tasks.Task;
 import org.macroprod.civilization.util.FlatBlockArea;
@@ -11,13 +12,9 @@ import java.util.TreeMap;
 
 
 public class MineArea extends Task {
+    FlatBlockArea area = null;
 
 
-    BlockPosition start = resident.getWorld().getSpawn();
-    FlatBlockArea area = new FlatBlockArea(resident.getWorld(), start.getX(), start.getZ(), start.getX() + 16, start.getZ() + 16);
-
-
-    String status = "AFK";
     public MineArea(Resident resident) {
         super(resident);
     }
@@ -25,19 +22,22 @@ public class MineArea extends Task {
     private LinkedList<BlockPosition> targetBlocks = new LinkedList<>();
     @Override
     public void run() {
-        annoyingLog(status, true);
-        if(targetBlocks.size() == 0) {
-            status = "Generating block list";
+        if(area == null) {
+            //If this caused you to error out idfc itll get changed when we do the thing just reload animal just change the coords to something reliable
+            area = new FlatBlockArea((int)resident.locX, (int)resident.locZ, (int)resident.locX + 30, (int)resident.locZ + 30).setWorld(resident.getWorld());
+        } else if(targetBlocks.size() == 0) {
             targetBlocks = area.getSurfaceLevelBlocks();
         } else {
             BlockPosition target = targetBlocks.get(0).down();
-            BlockPosition resLoc = new BlockPosition(resident.locX, resident.locY, resident.locZ);
-            if(distance(resLoc, targetBlocks.getFirst()) > distance(resLoc, targetBlocks.getLast())) {
-                target = targetBlocks.getLast();
-            }
-            //status = "Attempting to mine " + name + " block at [" + target.getX() + ", " + target.getY() + ", " + target.getZ() + "]";
+            this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
             if(mineBlock(resident, target)) {
                 targetBlocks.remove(0);
+                World world = resident.getWorld();
+                BlockPosition harnessBlock = target.down();
+                if(world.getType(harnessBlock).getBlock().getName().equals("Air")) {
+                    annoyingLog("Dropping safety block", false);
+                    world.setTypeAndData(harnessBlock, Blocks.DIAMOND_BLOCK.getBlockData(), 3);
+                }
             }
         }
     }
@@ -60,10 +60,6 @@ public class MineArea extends Task {
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
         if(distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 2) {
             boolean navigate = resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
-            PathEntity entity = resident.getNavigation().a(blockPosition);
-            String name = resident.world.getType(blockPosition).getBlock().getName();
-            //status = "Attempting to mine " + name + " block at [" + target.getX() + ", " + target.getY() + ", " + target.getZ() + "]";
-            status = "Attempting to path to " + name + " block at [" + blockPosition.getX() + ", " + blockPosition.getY() + ", " + blockPosition.getZ() + "] Result: " + entity;
             return false;
         } else {
             return damageBlock(resident, blockPosition);

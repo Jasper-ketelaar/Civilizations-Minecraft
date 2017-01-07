@@ -27,7 +27,7 @@ public class RealmsConnect
     public void connect(final String p_connect_1_, final int p_connect_2_)
     {
         Realms.setConnectedToRealms(true);
-        (new Thread("Realms-connect-tasks")
+        (new Thread("Realms-connect-behaviour")
         {
             public void run()
             {

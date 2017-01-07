@@ -3,8 +3,8 @@ package net.minecraft.entity.ai;
 public abstract class EntityAIBase
 {
     /**
-     * A bitmask telling which other tasks may not run concurrently. The test is a simple bitwise AND - if it yields
-     * zero, the two tasks may run concurrently, if not - they must run exclusively from each other.
+     * A bitmask telling which other behaviour may not run concurrently. The test is a simple bitwise AND - if it yields
+     * zero, the two behaviour may run concurrently, if not - they must run exclusively from each other.
      */
     private int mutexBits;
 
@@ -22,7 +22,7 @@ public abstract class EntityAIBase
     }
 
     /**
-     * Determine if this AI Task is interruptible by a higher (= lower value) priority tasks. All vanilla AITask have
+     * Determine if this AI Task is interruptible by a higher (= lower value) priority behaviour. All vanilla AITask have
      * this value set to true.
      */
     public boolean isInterruptible()
@@ -31,29 +31,29 @@ public abstract class EntityAIBase
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {
     }
 
     /**
-     * Sets a bitmask telling which other tasks may not run concurrently. The test is a simple bitwise AND - if it
-     * yields zero, the two tasks may run concurrently, if not - they must run exclusively from each other.
+     * Sets a bitmask telling which other behaviour may not run concurrently. The test is a simple bitwise AND - if it
+     * yields zero, the two behaviour may run concurrently, if not - they must run exclusively from each other.
      */
     public void setMutexBits(int mutexBitsIn)
     {
@@ -61,8 +61,8 @@ public abstract class EntityAIBase
     }
 
     /**
-     * Get a bitmask telling which other tasks may not run concurrently. The test is a simple bitwise AND - if it yields
-     * zero, the two tasks may run concurrently, if not - they must run exclusively from each other.
+     * Get a bitmask telling which other behaviour may not run concurrently. The test is a simple bitwise AND - if it yields
+     * zero, the two behaviour may run concurrently, if not - they must run exclusively from each other.
      */
     public int getMutexBits()
     {

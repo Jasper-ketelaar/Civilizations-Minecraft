@@ -1,4 +1,4 @@
-package org.macroprod.civilization.resident.types.tasks;
+package org.macroprod.civilization.jobs;
 
 import org.macroprod.civilization.resident.Resident;
 

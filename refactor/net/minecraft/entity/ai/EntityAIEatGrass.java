@@ -48,7 +48,7 @@ public class EntityAIEatGrass extends EntityAIBase
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -58,7 +58,7 @@ public class EntityAIEatGrass extends EntityAIBase
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {
@@ -82,7 +82,7 @@ public class EntityAIEatGrass extends EntityAIBase
     }
 
     /**
-     * Updates the tasks
+     * Updates the behaviour
      */
     public void updateTask()
     {

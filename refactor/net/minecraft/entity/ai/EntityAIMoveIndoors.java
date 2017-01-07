@@ -66,7 +66,7 @@ public class EntityAIMoveIndoors extends EntityAIBase
     }
 
     /**
-     * Execute a one shot tasks or start executing a continuous tasks
+     * Execute a one shot behaviour or start executing a continuous behaviour
      */
     public void startExecuting()
     {
@@ -92,7 +92,7 @@ public class EntityAIMoveIndoors extends EntityAIBase
     }
 
     /**
-     * Resets the tasks
+     * Resets the behaviour
      */
     public void resetTask()
     {

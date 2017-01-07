@@ -26,7 +26,7 @@ public class EntityAITasks
     }
 
     /**
-     * Add a now AITask. Args : priority, tasks
+     * Add a now AITask. Args : priority, behaviour
      */
     public void addTask(int priority, EntityAIBase task)
     {
@@ -34,7 +34,7 @@ public class EntityAITasks
     }
 
     /**
-     * removes the indicated tasks from the entity's AI tasks.
+     * removes the indicated behaviour from the entity's AI behaviour.
      */
     public void removeTask(EntityAIBase task)
     {
@@ -127,7 +127,7 @@ public class EntityAITasks
 
     /**
      * Determine if a specific AI Task can be executed, which means that all running higher (= lower int value) priority
-     * tasks are compatible with it or all lower priority tasks can be interrupted.
+     * behaviour are compatible with it or all lower priority behaviour can be interrupted.
      */
     private boolean canUse(EntityAITasks.EntityAITaskEntry taskEntry)
     {

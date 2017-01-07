@@ -28,7 +28,7 @@ public abstract class ResidentAdapter extends EntityVillager {
     }
 
     /**
-     * Method to clear target and tasks selectors
+     * Method to clear target and behaviour selectors
      */
     private void clear() {
         try {
@@ -104,6 +104,40 @@ public abstract class ResidentAdapter extends EntityVillager {
     @Override
     protected void a(EntityItem eItem) {
         forward.pickup(eItem);
+    }
+
+    /**
+     * Forwards to {@link Resident#loadData(NBTTagCompound nbt}
+     */
+    @Override
+    public void a(NBTTagCompound nbttagcompound) {
+        super.a(nbttagcompound);
+        forward.loadData(nbttagcompound);
+    }
+
+    /**
+     * Forwards to {@link Resident#saveData(NBTTagCompound nbt)}
+     */
+    @Override
+    public void b(NBTTagCompound nbttagcompound) {
+        super.b(nbttagcompound);
+        forward.saveData(nbttagcompound);
+    }
+
+
+    /**
+     * Override the default attributes of the NPC
+     * Don't call the superclass because double settings attributes causes the spawn to fail
+     * TODO Likely set follow range dynamically depending on villager
+     */
+    @Override
+    protected void initAttributes() {
+        this.getAttributeMap().b(GenericAttributes.FOLLOW_RANGE).setValue(45.0D);
+        this.getAttributeMap().b(GenericAttributes.maxHealth);
+        this.getAttributeMap().b(GenericAttributes.c);
+        this.getAttributeMap().b(GenericAttributes.MOVEMENT_SPEED);
+        this.getAttributeMap().b(GenericAttributes.g);
+        this.getAttributeMap().b(GenericAttributes.h);
     }
 
 }

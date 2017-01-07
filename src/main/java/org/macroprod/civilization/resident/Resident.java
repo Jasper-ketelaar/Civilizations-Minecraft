@@ -4,9 +4,9 @@ import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.Bukkit;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
-import org.macroprod.civilization.resident.types.tasks.Task;
-import org.macroprod.civilization.resident.types.tasks.TaskHandler;
-import org.macroprod.civilization.resident.types.tasks.instincts.WatchInstinct;
+import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.jobs.TaskHandler;
+import org.macroprod.civilization.jobs.instincts.WatchInstinct;
 
 import java.util.LinkedList;
 
@@ -21,6 +21,7 @@ public abstract class Resident extends ResidentAdapter {
         super(world);
         goalSelector.a(0, handler());
         this.inventory = new ResidentInventory();
+        this.setCustomName("Bob the " + this.getClass().getSimpleName());
     }
 
     public abstract int getCareer();
@@ -103,7 +104,7 @@ public abstract class Resident extends ResidentAdapter {
     public abstract MerchantRecipeList getOffers(EntityHuman human);
 
     /**
-     * Creates a tasks handler that'll handle this resident's behaviour
+     * Creates a behaviour handler that'll handle this resident's behaviour
      */
     public final TaskHandler handler() {
         return new TaskHandler(instincts(), tasks());
@@ -151,4 +152,38 @@ public abstract class Resident extends ResidentAdapter {
 
     }
 
+    /**
+     * Called upon NPC loading
+     * TODO look at EntityList to consider loading correct resident class on load otherwise we'll always load a settler
+     */
+    public void loadData(NBTTagCompound nbt) {
+        /**
+         * Loads the villagers inventory
+         */
+        NBTTagList items = nbt.getList("ResidentInventory", 10); //10 Represents the list being of NBTTagCompounds, see NBTBase
+        for(int i = 0; i < items.size(); ++i) {
+            ItemStack itemstack = new ItemStack(items.get(i));
+            if(!itemstack.isEmpty()) {
+                this.inventory.a(itemstack);
+            }
+        }
+    }
+
+    /**
+     * Called upon NPC saving
+     */
+    public void saveData(NBTTagCompound nbt) {
+        /**
+         * Saves the inventory - while EntityVillager already does this it saves a different entity
+         * TODO (Jasper look at disabling farmers looting seeds etc for that inventory)
+         */
+        NBTTagList nbttaglist = new NBTTagList();
+        for(int i = 0; i < this.inventory.getSize(); ++i) {
+            ItemStack itemstack = this.inventory.getItem(i);
+            if(!itemstack.isEmpty()) {
+                nbttaglist.add(itemstack.save(new NBTTagCompound()));
+            }
+        }
+        nbt.set("ResidentInventory", nbttaglist);
+    }
 }

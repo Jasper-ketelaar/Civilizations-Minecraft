@@ -4,7 +4,8 @@ import net.minecraft.server.v1_11_R1.EntityHuman;
 import net.minecraft.server.v1_11_R1.MerchantRecipeList;
 import net.minecraft.server.v1_11_R1.World;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.resident.types.tasks.Task;
+import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.jobs.behaviour.MineArea;
 
 import java.util.LinkedList;
 
@@ -32,7 +33,7 @@ public class Settler extends Resident {
     @Override
     public LinkedList<Task> tasks() {
         LinkedList<Task> tasks = new LinkedList<>();
-
+        tasks.add(new MineArea(this));
         return tasks;
     }
 

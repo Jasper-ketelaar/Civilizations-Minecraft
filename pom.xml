@@ -31,7 +31,7 @@
             <version>1.11.2</version>
             <type>jar</type>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/craftbukkit-1.11.2.jar</systemPath>
+            <systemPath>${project.basedir}/lib/spigot-1.11.2.jar</systemPath>
         </dependency>
 
         <dependency>

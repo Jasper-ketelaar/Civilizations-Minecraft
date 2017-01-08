@@ -8,3 +8,5 @@ commands:
     usage: /<command>
   fuckbob:
     description: test
+  tp:
+    description: test2

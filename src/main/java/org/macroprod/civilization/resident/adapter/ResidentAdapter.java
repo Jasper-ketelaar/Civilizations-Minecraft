@@ -151,4 +151,8 @@ public abstract class ResidentAdapter extends EntityVillager {
     public void setAttribute(IAttribute ga, double value) {
         this.getAttributeMap().b(ga);
     }
+
+    public void jump() {
+        super.cm();
+    }
 }

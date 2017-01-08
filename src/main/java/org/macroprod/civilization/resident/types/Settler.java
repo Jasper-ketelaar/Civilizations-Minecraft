@@ -33,7 +33,7 @@ public class Settler extends Resident {
     @Override
     public LinkedList<Task> tasks() {
         LinkedList<Task> tasks = new LinkedList<>();
-        tasks.add(new MineArea(this));
+        //tasks.add(new MineArea(this));
         return tasks;
     }
 

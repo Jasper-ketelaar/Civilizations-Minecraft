@@ -7,6 +7,7 @@ import net.minecraft.server.v1_11_R1.RegistryMaterials;
 import org.bukkit.entity.EntityType;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerItemBreakEvent;
+import org.macroprod.civilization.resident.types.Miner;
 import org.macroprod.civilization.resident.types.Settler;
 
 import java.lang.reflect.Field;
@@ -20,7 +21,8 @@ public enum CustomEntities {
     /**
      * Replace the default Minecraft civilization with our simpleton settlers
      */
-    VILLAGER("Villager", 120, EntityType.VILLAGER, EntityVillager.class, Settler.class);
+    SETTLER("Settler", 121, EntityType.VILLAGER, EntityVillager.class, Settler.class),
+    MINER("Miner", 122, EntityType.VILLAGER, EntityVillager.class, Miner.class);
 
     private String name;
     private int id;

@@ -14,7 +14,6 @@ public class TNTKevin extends Task {
 
     private Optional<EntityHuman> oKevin;
     private long time;
-    private BlockPosition evade;
 
     public TNTKevin(Resident resident) {
         super(resident);
@@ -28,28 +27,44 @@ public class TNTKevin extends Task {
         if (oKevin.get() != null) {
             EntityHuman kevin = oKevin.get();
             kevin.recalcPosition();
-            if (Calculations.distance(resident, kevin) > 6 && (evade == null || Calculations.distance(resident, kevin) > 45)) {
-                this.resident.getNavigation().a(kevin.locX, kevin.locY, kevin.locZ, 1.1f);
-                evade = null;
-            } else if(Calculations.distance(resident, kevin) < 6 && System.currentTimeMillis() - time > 5000) {
-                org.bukkit.World world = Bukkit.getWorld(resident.world.getWorld().getUID());
-                world.spawn(new Location(world, (resident.locX + kevin.locX) / 2, (resident.locY + kevin.locY) / 2, (resident.locZ + kevin.locZ) / 2), TNTPrimed.class);
-                this.resident.getControllerLook().a((int) (resident.locX + kevin.locX) / 2, (int) (resident.locY + kevin.locY) / 2, (int) (resident.locZ + kevin.locZ) / 2, resident.cL(), resident.N());
-                time = System.currentTimeMillis();
-                evade = null;
-            } else if (evade == null) {
-                this.evade = new BlockPosition(resident.locX + (resident.locX - kevin.locX), resident.locY, resident.locZ + (resident.locZ - kevin.locZ));
+
+            if(Calculations.distance(resident, kevin) > 30) {
+                time -= 500;
+            }
+            if(System.currentTimeMillis() - time > 6000) {
+                if(Calculations.distance(resident, kevin) < 4) {
+                    //Bomb
+                    org.bukkit.World world = Bukkit.getWorld(resident.world.getWorld().getUID());
+                    this.resident.getControllerLook().a((int) (resident.locX + kevin.locX) / 2, (int) (resident.locY + kevin.locY) / 2, (int) (resident.locZ + kevin.locZ) / 2, resident.cL(), resident.N());
+
+                    //Find air block
+                    BlockPosition tnt = new BlockPosition((resident.locX + kevin.locX) / 2, resident.locY > kevin.locY ? kevin.locY : resident.locY, (resident.locZ + kevin.locZ) / 2);
+                    for(int y = 0; y < 8 && !resident.getWorld().getType(tnt).getBlock().getName().equals("Air"); y++) {
+                        tnt = tnt.up();
+                    }
+
+                    //Only plant on air block
+                    if(resident.getWorld().getType(tnt).getBlock().getName().equals("Air")) {
+                        world.spawn(new Location(world, tnt.getX(), tnt.getY(), tnt.getZ()), TNTPrimed.class);
+                        time = System.currentTimeMillis();
+                    }
+                } else {
+                    //Chase
+                    this.resident.getNavigation().a(kevin.locX, kevin.locY, kevin.locZ, 1.1f);
+                }
             } else {
-                this.evade = new BlockPosition(resident.locX + (resident.locX - kevin.locX), resident.locY, resident.locZ);
-                resident.getNavigation().a(evade.getX(), evade.getY(), evade.getZ(), 1f);
+                //Evade
+                BlockPosition bp = new BlockPosition(resident.locX + (resident.locX - kevin.locX), resident.locY, resident.locZ + (resident.locZ - kevin.locZ));
+                resident.getNavigation().a(bp.getX(), bp.getY(), bp.getZ(), 1f);
             }
         }
-
     }
+
+
 
     @Override
     public boolean validate() {
-        return  (oKevin = (this.resident.world.players.stream().filter(e -> e.getName().equalsIgnoreCase("Kjcvheel") &&
+        return  (oKevin = (this.resident.world.players.stream().filter(e -> e.getName().equalsIgnoreCase("andrew4213") &&
                 Calculations.distance(resident, e) < 50)).findAny()).isPresent();
     }
 }

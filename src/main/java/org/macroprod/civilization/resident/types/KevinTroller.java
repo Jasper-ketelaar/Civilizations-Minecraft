@@ -33,16 +33,19 @@ public class KevinTroller extends Resident {
 
     @Override
     public LinkedList<Task> tasks() {
-        return new LinkedList<>();
+        LinkedList<Task> tasks = new LinkedList<>();
+        return tasks;
     }
 
     @Override
     public String getName() {
-        return this.getCustomName();
+        return "";
     }
 
     @Override
     protected LinkedList<Task> instincts() {
-        return new LinkedList<>(Arrays.asList(new TNTKevin(this)));
+        LinkedList<Task> inst = new LinkedList<>();
+        inst.add(new TNTKevin(this));
+        return inst;
     }
 }

@@ -1,33 +1,26 @@
 package org.macroprod.civilization.resident;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.minecraft.server.v1_11_R1.*;
 import net.minecraft.server.v1_11_R1.ItemStack;
 import net.minecraft.server.v1_11_R1.MerchantRecipe;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
 
 import java.io.*;
 
 import org.macroprod.civilization.Civilization;
-import org.macroprod.civilization.jobs.Task;
-import org.macroprod.civilization.jobs.TaskHandler;
-import org.macroprod.civilization.jobs.instincts.*;
+import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.TaskHandler;
+import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
 import org.macroprod.civilization.util.Calculations;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * Created by jasperketelaar on 1/4/17.
@@ -197,7 +190,7 @@ public abstract class Resident extends ResidentAdapter {
     public abstract MerchantRecipeList getOffers(EntityHuman human);
 
     /**
-     * Creates a behaviour handler that'll handle this resident's behaviour
+     * Creates a jobs handler that'll handle this resident's jobs
      */
     public final TaskHandler handler() {
         return new TaskHandler(instincts(), tasks());

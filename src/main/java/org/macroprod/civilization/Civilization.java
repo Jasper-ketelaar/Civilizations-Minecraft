@@ -66,7 +66,7 @@ public class Civilization extends JavaPlugin implements Listener {
                 }
             }
 
-            if (label.equalsIgnoreCase("tp")) {
+            /*if (label.equalsIgnoreCase("tp")) {
                 if (opts.length > 0 && sender.getServer().getPlayer(opts[0]) != null) {
                     for (Resident resident : residents) {
                         if (resident.getCustomName().equalsIgnoreCase(opts[0])) {
@@ -83,7 +83,7 @@ public class Civilization extends JavaPlugin implements Listener {
                     return Bukkit.dispatchCommand(sender, builder.toString());
                 }
 
-            }
+            }*/
         }
         return false;
 

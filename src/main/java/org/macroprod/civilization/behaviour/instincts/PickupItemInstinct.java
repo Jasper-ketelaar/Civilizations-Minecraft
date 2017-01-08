@@ -1,8 +1,8 @@
-package org.macroprod.civilization.jobs.instincts;
+package org.macroprod.civilization.behaviour.instincts;
 
 import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityItem;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.Calculations;
 

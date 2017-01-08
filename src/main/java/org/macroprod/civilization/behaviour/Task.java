@@ -1,4 +1,4 @@
-package org.macroprod.civilization.jobs;
+package org.macroprod.civilization.behaviour;
 
 import org.macroprod.civilization.resident.Resident;
 

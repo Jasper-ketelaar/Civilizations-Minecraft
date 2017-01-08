@@ -35,7 +35,7 @@ public abstract class ResidentAdapter extends EntityVillager {
     }
 
     /**
-     * Method to clear target and behaviour selectors
+     * Method to clear target and jobs selectors
      */
     private void clear() {
         try {

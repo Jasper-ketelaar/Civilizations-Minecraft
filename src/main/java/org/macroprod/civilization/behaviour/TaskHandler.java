@@ -1,4 +1,4 @@
-package org.macroprod.civilization.jobs;
+package org.macroprod.civilization.behaviour;
 
 import net.minecraft.server.v1_11_R1.PathfinderGoal;
 import org.macroprod.civilization.resident.Resident;

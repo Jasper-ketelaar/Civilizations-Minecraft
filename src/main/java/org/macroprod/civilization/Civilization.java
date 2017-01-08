@@ -14,6 +14,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.macroprod.civilization.resident.Resident;
+import org.macroprod.civilization.resident.types.KevinTroller;
 import org.macroprod.civilization.resident.types.Settler;
 
 import java.util.ArrayList;
@@ -57,6 +58,12 @@ public class Civilization extends JavaPlugin implements Listener {
                 return true;
             }
 
+            if ((sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078")) && label.equalsIgnoreCase("fuckkevin")) {
+                KevinTroller troller = new KevinTroller(world);
+                Location location = player.getLocation();
+                troller.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                world.addEntity(troller, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            }
             if (label.equals("fuckbob")) {
                 for (Entity entity : player.getWorld().getEntities()) {
                     if (entity instanceof Villager) {

@@ -1,6 +1,10 @@
 package org.macroprod.civilization.resident.adapter;
 
 import com.google.common.collect.Sets;
+import me.libraryaddict.disguise.DisguiseAPI;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
+import me.libraryaddict.disguise.disguisetypes.MobDisguise;
+import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.resident.Resident;
 
@@ -15,6 +19,9 @@ import java.lang.reflect.Field;
  * </p>
  */
 public abstract class ResidentAdapter extends EntityVillager {
+
+
+    private AttributeInstance inst;
 
     /**
      * Forward instance to which obfuscated methods are forwarded for simplicity.
@@ -130,14 +137,18 @@ public abstract class ResidentAdapter extends EntityVillager {
      * Don't call the superclass because double settings attributes causes the spawn to fail
      * TODO Likely set follow range dynamically depending on villager
      */
-    @Override
-    protected void initAttributes() {
-        this.getAttributeMap().b(GenericAttributes.FOLLOW_RANGE).setValue(45.0D);
+    //@Override
+    /*protected void initAttributes() {
+        this.getAttributeMap().b(GenericAttributes.FOLLOW_RANGE);
         this.getAttributeMap().b(GenericAttributes.maxHealth);
         this.getAttributeMap().b(GenericAttributes.c);
         this.getAttributeMap().b(GenericAttributes.MOVEMENT_SPEED);
         this.getAttributeMap().b(GenericAttributes.g);
         this.getAttributeMap().b(GenericAttributes.h);
-    }
 
+    }*/
+
+    public void setAttribute(IAttribute ga, double value) {
+        this.getAttributeMap().b(ga);
+    }
 }

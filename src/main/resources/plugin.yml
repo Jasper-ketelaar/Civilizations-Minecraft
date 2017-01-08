@@ -1,12 +1,10 @@
 name:  Civilization
 main:  org.macroprod.civilization.Civilization
 version: 1.0
+depend: [LibsDisguises, ProtocolLib]
 commands:
-  spawnminer:
+  settler:
     description: Spawns a miner villager
     usage: /<command>
-  reload:
-    description: Reloads the plugin
-    usage: /civilization <command>
-  break:
+  fuckbob:
     description: test

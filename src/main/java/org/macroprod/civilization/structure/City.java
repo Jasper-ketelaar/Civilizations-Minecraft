@@ -1,13 +1,14 @@
 package org.macroprod.civilization.structure;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
+import net.minecraft.server.v1_11_R1.Village;
 import org.macroprod.civilization.structure.residencies.Residence;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class City {
+public class City extends Village {
 
     public final static int PLOT_SIZE = 10;
     public final static int PATH_SIZE = 5;

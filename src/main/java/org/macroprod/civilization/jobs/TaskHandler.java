@@ -1,6 +1,7 @@
 package org.macroprod.civilization.jobs;
 
 import net.minecraft.server.v1_11_R1.PathfinderGoal;
+import org.macroprod.civilization.resident.Resident;
 
 import java.util.LinkedList;
 
@@ -19,6 +20,9 @@ public class TaskHandler extends PathfinderGoal {
     }
 
     public void run() {
+        Resident resident = instincts.get(0).resident;
+        /*if (!resident.getPlayerDisguise().isDisplayedInTab())
+            instincts.get(0).resident.getPlayerDisguise().setDisplayedInTab(true);*/
         for (Task task : instincts) {
             if (task.validate()) {
                 task.run();

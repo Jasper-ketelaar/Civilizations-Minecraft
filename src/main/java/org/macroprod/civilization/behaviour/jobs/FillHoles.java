@@ -1,6 +1,6 @@
-package org.macroprod.civilization.jobs.behaviour;
+package org.macroprod.civilization.behaviour.jobs;
 
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
 
 public class FillHoles extends Task {

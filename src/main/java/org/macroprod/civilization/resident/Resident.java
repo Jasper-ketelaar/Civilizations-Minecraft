@@ -1,32 +1,26 @@
 package org.macroprod.civilization.resident;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketContainer;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.minecraft.server.v1_11_R1.*;
 import net.minecraft.server.v1_11_R1.ItemStack;
 import net.minecraft.server.v1_11_R1.MerchantRecipe;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.*;
 
 import java.io.*;
 
 import org.macroprod.civilization.Civilization;
-import org.macroprod.civilization.jobs.Task;
-import org.macroprod.civilization.jobs.TaskHandler;
-import org.macroprod.civilization.jobs.instincts.ChatInstinct;
-import org.macroprod.civilization.jobs.instincts.PickupItemInstinct;
-import org.macroprod.civilization.jobs.instincts.TNTKevin;
-import org.macroprod.civilization.jobs.instincts.WatchInstinct;
+import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.TaskHandler;
+import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
+import org.macroprod.civilization.util.Calculations;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by jasperketelaar on 1/4/17.
@@ -71,10 +65,9 @@ public abstract class Resident extends ResidentAdapter {
         this.disguise = new PlayerDisguise(name);
         this.disguise.setDisplayedInTab(true);
 
-
-
         DisguiseAPI.disguiseToAll(this.getBukkitEntity(), disguise);
 
+        Civilization.getInstance().register(this);
         /*setSlot(EnumItemSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS, 1));
         setSlot(EnumItemSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET, 1));
         setSlot(EnumItemSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE, 1));
@@ -115,6 +108,16 @@ public abstract class Resident extends ResidentAdapter {
         return message;
     }
 
+    public List<EntityHuman> getLoadedPlayers() {
+        return world.players;
+    }
+
+    public Optional<EntityHuman> getClosestPlayer() {
+        return world.players.stream().sorted((a, b) -> {
+            return (int) (Calculations.distance(this, b) - Calculations.distance(this, a));
+        }).findFirst();
+    }
+
     /**
      * Method forwarded from our adapter that is invoked upon purchasing a recipe
      *
@@ -127,8 +130,17 @@ public abstract class Resident extends ResidentAdapter {
 
     @Override
     public void die() {
-        super.die();
+        if (this.getInventory() != null) {
+            for (ItemStack itemStack : this.getInventory()) {
+                if (itemStack != null && itemStack.getCount() > 0 && this.world != null && this.getLocation() != null) {
+                    Block.a(this.world, this.getLocation(), itemStack);
+                }
+            }
+        }
+        disguise.setDisplayedInTab(false);
         world.getServer().broadcastMessage("§E" + this.getCustomName() + " left the game");
+        Civilization.getInstance().remove(this);
+        super.die();
     }
 
     /**
@@ -141,7 +153,8 @@ public abstract class Resident extends ResidentAdapter {
     public boolean interact(EntityHuman human, EnumHand hand) {
         if (human instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) human;
-            if (Bukkit.getServer().getPlayer(player.getUniqueID()).isOp()) {
+            if (player.getName().equalsIgnoreCase("jasper078") || player.getName().equalsIgnoreCase("andrew4213")
+                    || Bukkit.getServer().getPlayer(player.getUniqueID()).isOp()) {
                 human.openContainer(inventory);
             }
         }
@@ -177,7 +190,7 @@ public abstract class Resident extends ResidentAdapter {
     public abstract MerchantRecipeList getOffers(EntityHuman human);
 
     /**
-     * Creates a behaviour handler that'll handle this resident's behaviour
+     * Creates a jobs handler that'll handle this resident's jobs
      */
     public final TaskHandler handler() {
         return new TaskHandler(instincts(), tasks());
@@ -188,10 +201,11 @@ public abstract class Resident extends ResidentAdapter {
      */
     private LinkedList<Task> instincts() {
         LinkedList<Task> instincts = new LinkedList<>();
-        instincts.add(new TNTKevin(this));
+        //]instincts.add(new TNTKevin(this));
         instincts.add(new PickupItemInstinct(this));
         instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
-        instincts.add(new ChatInstinct(this));
+        instincts.add(new StrollInstinct(this));
+        //instincts.add(new ChatInstinct(this));
 
 
         return instincts;

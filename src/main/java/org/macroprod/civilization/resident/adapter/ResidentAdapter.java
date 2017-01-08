@@ -35,7 +35,7 @@ public abstract class ResidentAdapter extends EntityVillager {
     }
 
     /**
-     * Method to clear target and behaviour selectors
+     * Method to clear target and jobs selectors
      */
     private void clear() {
         try {
@@ -150,5 +150,9 @@ public abstract class ResidentAdapter extends EntityVillager {
 
     public void setAttribute(IAttribute ga, double value) {
         this.getAttributeMap().b(ga);
+    }
+
+    public void jump() {
+        super.cm();
     }
 }

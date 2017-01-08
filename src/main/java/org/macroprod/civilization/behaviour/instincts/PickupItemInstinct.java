@@ -1,9 +1,8 @@
-package org.macroprod.civilization.jobs.instincts;
+package org.macroprod.civilization.behaviour.instincts;
 
 import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityItem;
-import net.minecraft.server.v1_11_R1.EntityVillager;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.Calculations;
 
@@ -19,9 +18,13 @@ public class PickupItemInstinct extends Task {
 
     @Override
     public void run() {
-
         Entity ent = (Entity) array[0];
-        this.resident.getNavigation().a(ent.locX, ent.locY, ent.locZ, 0.5f);
+
+        if (Calculations.distance(resident, ent) < 3 && ent.locY - resident.locY >= 1 && resident.onGround) {
+            resident.jump();
+        }
+
+        this.resident.getNavigation().a(ent.locX, ent.locY, ent.locZ, 0.8f);
     }
 
 
@@ -29,7 +32,8 @@ public class PickupItemInstinct extends Task {
     public boolean validate() {
         array = resident.world.entityList.stream().filter((e) -> e instanceof EntityItem
                 && !resident.getInventory().isFull(((EntityItem) e).getItemStack().getItem())
-                && Calculations.distance(resident, e) < 5
+                && Math.abs(e.locY - resident.locY) < 3
+                && Calculations.distance(resident, e) < 60
         ).toArray();
 
         Arrays.sort(array, (o1, o2) -> {

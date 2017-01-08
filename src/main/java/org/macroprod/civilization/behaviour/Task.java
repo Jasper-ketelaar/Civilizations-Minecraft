@@ -1,4 +1,4 @@
-package org.macroprod.civilization.jobs;
+package org.macroprod.civilization.behaviour;
 
 import org.macroprod.civilization.resident.Resident;
 
@@ -16,4 +16,5 @@ public abstract class Task {
     public abstract void run();
 
     public abstract boolean validate();
+
 }

@@ -1,4 +1,4 @@
-package org.macroprod.civilization.jobs.instincts;
+package org.macroprod.civilization.behaviour.instincts;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -6,7 +6,7 @@ import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityPlayer;
 import net.minecraft.server.v1_11_R1.IEntitySelector;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 
 /**
  * Created by jasperketelaar on 1/5/17.

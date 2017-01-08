@@ -5,13 +5,14 @@ import net.minecraft.server.v1_11_R1.InventorySubcontainer;
 import net.minecraft.server.v1_11_R1.Item;
 import net.minecraft.server.v1_11_R1.ItemStack;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by jasperketelaar on 1/5/17.
  */
-public class ResidentInventory extends InventorySubcontainer {
+public class ResidentInventory extends InventorySubcontainer implements Iterable<ItemStack> {
 
     public static final int SLOT_COUNT = 36;
 
@@ -97,5 +98,10 @@ public class ResidentInventory extends InventorySubcontainer {
 
     public boolean removeItem(Item item, int amount) {
         return false;
+    }
+
+    @Override
+    public Iterator<ItemStack> iterator() {
+        return super.getContents().iterator();
     }
 }

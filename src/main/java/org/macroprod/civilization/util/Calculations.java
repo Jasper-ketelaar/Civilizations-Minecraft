@@ -1,7 +1,6 @@
 package org.macroprod.civilization.util;
 
-import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.Entity;
+import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.resident.Resident;
 
 public class Calculations {
@@ -23,4 +22,7 @@ public class Calculations {
         return distance(new BlockPosition(pos1.locX, pos1.locY, pos1.locZ), new BlockPosition(pos2.locX, pos2.locY, pos2.locZ));
     }
 
+    public static Vec3D vectorBetween(Entity from, Entity to) {
+        return new Vec3D(from.locX - to.locX, from.locY - to.locY, from.locZ - to.locZ);
+    }
 }

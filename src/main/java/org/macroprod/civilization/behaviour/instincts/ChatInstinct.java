@@ -1,7 +1,7 @@
-package org.macroprod.civilization.jobs.instincts;
+package org.macroprod.civilization.behaviour.instincts;
 
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
 
 import java.io.IOException;
@@ -16,11 +16,6 @@ public class ChatInstinct extends Task {
 
     private static long time = 0;
     private static long random = 5000;
-
-    private static final List<String> INSULTS = Arrays.asList("Go fuck yourself %s", "Die %s", "You're a fucking idiot %s",
-            "I fucking hate you %s", "Shut the fuck up %s you sand nigger", "Hi %s", "Suck a dick you motherfucking cocksucker, %s",
-            "Trimming armour for 50k %s", "Your mom's cavity is bigger than this cave I am digging, %s", "Please send %s a death message",
-            "Why the fuck do you exist %s?");
 
     public ChatInstinct(Resident resident) {
         super(resident);

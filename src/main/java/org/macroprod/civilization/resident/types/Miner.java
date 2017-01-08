@@ -3,7 +3,7 @@ package org.macroprod.civilization.resident.types;
 import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.items.Contract;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 
 import java.util.LinkedList;
 
@@ -32,7 +32,7 @@ public class Miner extends Resident {
     @Override
     public LinkedList<Task> tasks() {
         LinkedList<Task> tasks = new LinkedList<>();
-        //TODO: Add career specific behaviour
+        //TODO: Add career specific jobs
 
         return tasks;
     }

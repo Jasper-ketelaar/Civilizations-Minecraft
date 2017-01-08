@@ -1,9 +1,9 @@
-package org.macroprod.civilization.jobs.behaviour;
+package org.macroprod.civilization.behaviour.jobs;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
-import org.macroprod.civilization.jobs.Task;
+import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.FlatBlockArea;
 

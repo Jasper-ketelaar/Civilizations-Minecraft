@@ -26,7 +26,6 @@ import java.util.Optional;
  * Created by jasperketelaar on 1/4/17.
  */
 public abstract class Resident extends ResidentAdapter {
-
     private final static ArrayList<String> NAMES = new ArrayList<>();
 
     private final PlayerDisguise disguise;
@@ -201,10 +200,9 @@ public abstract class Resident extends ResidentAdapter {
      */
     private LinkedList<Task> instincts() {
         LinkedList<Task> instincts = new LinkedList<>();
-        //]instincts.add(new TNTKevin(this));
         instincts.add(new PickupItemInstinct(this));
         instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
-        instincts.add(new StrollInstinct(this));
+        //instincts.add(new StrollInstinct(this));
         //instincts.add(new ChatInstinct(this));
 
 
@@ -235,11 +233,17 @@ public abstract class Resident extends ResidentAdapter {
      */
     public void pickup(EntityItem eItem) {
         ItemStack is = eItem.getItemStack();
-        ItemStack is1 = inventory.addItemStack(is);
-        if (is1 == null) {
+        Item item = is.getItem();
+        if(item instanceof ItemArmor) {
+            setSlot(((ItemArmor) item).c, is);
             eItem.die();
         } else {
-            is.setCount(is1.getCount());
+            ItemStack is1 = inventory.addItemStack(is);
+            if (is1 == null) {
+                eItem.die();
+            } else {
+                is.setCount(is1.getCount());
+            }
         }
 
     }

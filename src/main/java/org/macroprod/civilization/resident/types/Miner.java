@@ -2,6 +2,7 @@ package org.macroprod.civilization.resident.types;
 
 import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.items.Contract;
+import org.macroprod.civilization.behaviour.jobs.MineCubeArea;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.behaviour.Task;
 
@@ -33,6 +34,7 @@ public class Miner extends Resident {
     public LinkedList<Task> tasks() {
         LinkedList<Task> tasks = new LinkedList<>();
         //TODO: Add career specific jobs
+        tasks.add(new MineCubeArea(this));
 
         return tasks;
     }

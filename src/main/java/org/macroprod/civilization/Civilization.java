@@ -1,12 +1,10 @@
 package org.macroprod.civilization;
 
 import net.minecraft.server.v1_11_R1.World;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_11_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
@@ -17,9 +15,9 @@ import org.bukkit.event.player.PlayerChatTabCompleteEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.resident.types.Settler;
-import org.macroprod.civilization.util.CustomEntities;
 
 import java.util.ArrayList;
+import org.macroprod.civilization.util.entities.CustomEntities;
 
 /**
  * Created by jasperketelaar on 1/3/17.
@@ -27,6 +25,7 @@ import java.util.ArrayList;
 public class Civilization extends JavaPlugin implements Listener {
 
     private final ArrayList<Resident> residents = new ArrayList<>();
+
     private static Civilization instance;
 
     public static Civilization getInstance() {

@@ -18,6 +18,8 @@ import org.macroprod.civilization.Civilization;
 import org.macroprod.civilization.jobs.Task;
 import org.macroprod.civilization.jobs.TaskHandler;
 import org.macroprod.civilization.jobs.instincts.ChatInstinct;
+import org.macroprod.civilization.jobs.instincts.PickupItemInstinct;
+import org.macroprod.civilization.jobs.instincts.TNTKevin;
 import org.macroprod.civilization.jobs.instincts.WatchInstinct;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
@@ -61,7 +63,7 @@ public abstract class Resident extends ResidentAdapter {
         super(world);
         goalSelector.a(0, handler());
         this.inventory = new ResidentInventory();
-        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(45);
+        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(60);
 
         String name = NAMES.get(random.nextInt(NAMES.size() - 1));
         this.setCustomName(name);
@@ -186,8 +188,12 @@ public abstract class Resident extends ResidentAdapter {
      */
     private LinkedList<Task> instincts() {
         LinkedList<Task> instincts = new LinkedList<>();
+        instincts.add(new TNTKevin(this));
+        instincts.add(new PickupItemInstinct(this));
         instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
         instincts.add(new ChatInstinct(this));
+
+
         return instincts;
     }
 

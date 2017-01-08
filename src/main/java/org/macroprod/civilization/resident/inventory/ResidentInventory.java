@@ -70,13 +70,13 @@ public class ResidentInventory extends InventorySubcontainer {
 
     public boolean isFull(Item item) {
         if (countEmptySpots() > 0) {
-            return true;
+            return false;
         } else {
             int sum = count(item);
             if (sum % item.getMaxStackSize() == 0)
-                return false;
+                return true;
         }
-        return true;
+        return false;
     }
 
     public int count(Block block) {

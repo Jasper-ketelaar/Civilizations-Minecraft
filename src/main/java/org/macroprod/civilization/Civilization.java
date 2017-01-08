@@ -51,10 +51,15 @@ public class Civilization extends JavaPlugin implements Listener {
             Player player = (Player) sender;
             World world = ((CraftWorld) player.getWorld()).getHandle();
             if (label.equalsIgnoreCase("settler")) {
-                Settler settler = new Settler(world);
-                Location location = player.getLocation();
-                settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                int amt = 1;
+                if (opts.length > 0)
+                    amt = Integer.parseInt(opts[0]);
+                for (int i = 0; i < amt; i ++) {
+                    Settler settler = new Settler(world);
+                    Location location = player.getLocation();
+                    settler.setLocation(location.getX() + i * 5, location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                    world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
                 return true;
             }
 

@@ -1,5 +1,6 @@
 package org.macroprod.civilization.jobs.instincts;
 
+import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityItem;
 import net.minecraft.server.v1_11_R1.EntityVillager;
@@ -30,6 +31,7 @@ public class PickupItemInstinct extends Task {
         array = resident.world.entityList.stream().filter((e) -> e instanceof EntityItem
                 && !resident.getInventory().isFull(((EntityItem) e).getItemStack().getItem())
                 && Calculations.distance(resident, e) < 5
+                && !resident.getWorld().getType(new BlockPosition(e.locX, e.locY, e.locZ).up()).getMaterial().isSolid()
         ).toArray();
 
         Arrays.sort(array, (o1, o2) -> {

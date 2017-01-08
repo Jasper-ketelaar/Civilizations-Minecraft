@@ -1,37 +1,25 @@
 package org.macroprod.civilization;
 
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import net.minecraft.server.v1_11_R1.World;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.player.PlayerChatTabCompleteEvent;
-import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.macroprod.civilization.resident.types.Settler;
-import org.macroprod.civilization.util.CustomEntities;
-import org.mcsg.double0negative.tabapi.TabAPI;
-
-import java.io.File;
-import java.io.IOException;
+import org.macroprod.civilization.util.entities.CustomEntities;
 
 /**
  * Created by jasperketelaar on 1/3/17.
  */
 public class Civilization extends JavaPlugin implements Listener {
-
     private static Civilization instance;
 
     public static Civilization getInstance() {

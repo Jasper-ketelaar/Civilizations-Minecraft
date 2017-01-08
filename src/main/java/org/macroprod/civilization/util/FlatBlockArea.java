@@ -6,8 +6,8 @@ import net.minecraft.server.v1_11_R1.World;
 import java.util.LinkedList;
 
 public class FlatBlockArea {
-    private World world = null;
-    private final int minX, minZ, maxX, maxZ;
+    protected World world = null;
+    final int minX, minZ, maxX, maxZ;
 
     /**
      * Construct a 2 dimensional area from a block position and two dimensions
@@ -73,4 +73,13 @@ public class FlatBlockArea {
         }
         return highestBlocks;
     }
+
+    public boolean containsBlock(final BlockPosition bp) {
+        return containsBlock(bp.getX(), bp.getZ());
+    }
+
+    public boolean containsBlock(final double x, final double z) {
+        return x <= maxX && x >= minX && z <= maxZ && z >= minZ;
+    }
+
 }

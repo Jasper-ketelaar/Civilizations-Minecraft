@@ -17,10 +17,7 @@ import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
 import org.macroprod.civilization.util.Calculations;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by jasperketelaar on 1/4/17.
@@ -53,13 +50,12 @@ public abstract class Resident extends ResidentAdapter {
         }
     }
 
-    public Resident(World world) {
+    public Resident(World world, String name) {
         super(world);
         goalSelector.a(0, handler());
         this.inventory = new ResidentInventory();
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(60);
 
-        String name = NAMES.get(random.nextInt(NAMES.size() - 1));
         this.setCustomName(name);
         world.getServer().broadcastMessage("§E" + name + " joined the game");
         this.disguise = new PlayerDisguise(name);
@@ -68,6 +64,10 @@ public abstract class Resident extends ResidentAdapter {
         DisguiseAPI.disguiseToAll(this.getBukkitEntity(), disguise);
 
         Civilization.getInstance().register(this);
+    }
+
+    public Resident(World world) {
+        this(world, NAMES.get(new Random().nextInt(NAMES.size() - 1)));
         /*setSlot(EnumItemSlot.LEGS, new ItemStack(Items.DIAMOND_LEGGINGS, 1));
         setSlot(EnumItemSlot.HEAD, new ItemStack(Items.DIAMOND_HELMET, 1));
         setSlot(EnumItemSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE, 1));
@@ -199,7 +199,7 @@ public abstract class Resident extends ResidentAdapter {
     /**
      * Creates instincts list
      */
-    private LinkedList<Task> instincts() {
+    protected LinkedList<Task> instincts() {
         LinkedList<Task> instincts = new LinkedList<>();
         //]instincts.add(new TNTKevin(this));
         instincts.add(new PickupItemInstinct(this));

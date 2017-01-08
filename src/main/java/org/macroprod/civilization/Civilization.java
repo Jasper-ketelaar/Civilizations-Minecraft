@@ -98,14 +98,14 @@ public class Civilization extends JavaPlugin implements Listener {
             if (label.equalsIgnoreCase("tp")) {
                 if (opts.length > 0) {
                     for (Resident resident : residents) {
-                        if (resident.getCustomName().equalsIgnoreCase(opts[0])) {
+                        if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
                             player.teleport(resident.getBukkitEntity());
                             return true;
                         }
                     }
-                    StringBuilder builder = new StringBuilder(label);
+                    StringBuilder builder = new StringBuilder("teleport");
                     for (String opt : opts) {
-                        builder.append(" ").append(opt.contains("tp") ? opt.replace("tp", "teleport") : opt);
+                        builder.append(" ").append(opt);
                     }
                     return this.getServer().dispatchCommand(sender, builder.toString());
                 }

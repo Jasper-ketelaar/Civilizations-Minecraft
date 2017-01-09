@@ -5,39 +5,39 @@ import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
 import org.macroprod.civilization.behaviour.Task;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.util.FlatBlockArea;
-
-import java.util.LinkedList;
+import org.macroprod.civilization.util.CubeBlockArea;
 import java.util.TreeMap;
 
-
-public class MineArea extends Task {
+public class MineCubeArea extends Task {
     private static TreeMap<BlockPosition, Float> blockDamageMap = new TreeMap<>();
-    FlatBlockArea area = null;
-    long time = 0;
-    private LinkedList<BlockPosition> targetBlocks = new LinkedList<>();
+    private CubeBlockArea area = null;
+    private BlockPosition base = null;
+    private long time = 0;
+    private BlockPosition target = null;
 
-    public MineArea(Resident resident) {
+    public MineCubeArea(Resident resident) {
         super(resident);
     }
 
     @Override
     public void run() {
         if (area == null) {
-            area = new FlatBlockArea((int) resident.locX, (int) resident.locZ, (int) resident.locX + 5, (int) resident.locZ + 5).setWorld(resident.getWorld());
-        } else if (targetBlocks.size() == 0) {
-            targetBlocks = area.getSurfaceLevelBlocks();
-        } else {
-            BlockPosition target = targetBlocks.get(0).down();
+            base = resident.getLocation();
+            area = new CubeBlockArea(base.getX() - 20, base.getY(), base.getZ() - 20, base.getX() + 20, base.getY() + 2, base.getZ() + 20).setWorld(resident.getWorld());
+            resident.getWorld().setTypeAndData(base.down(), Blocks.IRON_BLOCK.getBlockData(), 3);
+        } else if (target != null) {
+            World world = resident.getWorld();
             this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
             if (mineBlock(resident, target)) {
-                targetBlocks.remove(0);
-                World world = resident.getWorld();
                 BlockPosition harnessBlock = target.down();
                 if (!world.getType(harnessBlock).getMaterial().isSolid()) {
                     world.setTypeAndData(harnessBlock, Blocks.COBBLESTONE.getBlockData(), 3);
                 }
+                target = null;
             }
+        } else {
+            target = area.findClosestBlock(base);
+            System.out.println(target != null ? target.getX() + ":" + target.getY() + ":" + target.getZ() : "No target.");
         }
     }
 
@@ -54,7 +54,7 @@ public class MineArea extends Task {
     }
 
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
-        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 2) {
+        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 3) {
             boolean navigate = resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
             return false;
         } else {
@@ -76,7 +76,7 @@ public class MineArea extends Task {
     private float damageBlock(Resident resident, BlockPosition block, float progress) {
         float toughness = resident.getWorld().getType(block).b(resident.getWorld(), block);
         if (toughness > 0) {
-            int damage = (int) (progress += 3);
+            int damage = (int) (progress += 1);
             resident.getWorld().c(resident.getId(), block, damage > 10 ? 10 : damage);
             if (progress >= 10) {
                 resident.getWorld().setAir(block, true);

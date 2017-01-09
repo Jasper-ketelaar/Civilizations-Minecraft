@@ -19,9 +19,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.resident.types.KevinTroller;
 import org.macroprod.civilization.resident.types.Settler;
-import org.macroprod.civilization.util.CustomEntities;
 
 import java.util.ArrayList;
+import org.macroprod.civilization.util.entities.CustomEntities;
 
 /**
  * Created by jasperketelaar on 1/3/17.

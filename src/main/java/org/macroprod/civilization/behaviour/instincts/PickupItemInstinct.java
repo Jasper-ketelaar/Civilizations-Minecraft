@@ -1,15 +1,14 @@
 package org.macroprod.civilization.behaviour.instincts;
 
-import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityItem;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.Calculations;
 
 import java.util.Arrays;
 
-public class PickupItemInstinct extends Task {
+public class PickupItemInstinct extends Instinct {
 
     private Object[] array;
 

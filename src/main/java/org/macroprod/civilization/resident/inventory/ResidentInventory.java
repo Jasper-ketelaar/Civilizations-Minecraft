@@ -4,6 +4,7 @@ import net.minecraft.server.v1_11_R1.Block;
 import net.minecraft.server.v1_11_R1.InventorySubcontainer;
 import net.minecraft.server.v1_11_R1.Item;
 import net.minecraft.server.v1_11_R1.ItemStack;
+import org.bukkit.Material;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -89,6 +90,7 @@ public class ResidentInventory extends InventorySubcontainer implements Iterable
         for (ItemStack stack : getStacksOfItem(item)) {
             sum += stack.getCount();
         }
+
         return sum;
     }
 

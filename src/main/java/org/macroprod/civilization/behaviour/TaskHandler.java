@@ -3,43 +3,51 @@ package org.macroprod.civilization.behaviour;
 import net.minecraft.server.v1_11_R1.PathfinderGoal;
 import org.macroprod.civilization.resident.Resident;
 
+import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
-/**
- * Created by jasperketelaar on 1/4/17.
- */
 public class TaskHandler extends PathfinderGoal {
 
-    private final LinkedList<Task> instincts;
-    private final LinkedList<Task> characteristics;
-    private Task work;
+    private final LinkedList<Instinct> instincts;
+    private final Deque<Job> jobs;
 
-    public TaskHandler(LinkedList<Task> instincts, LinkedList<Task> characteristics) {
+    public TaskHandler(LinkedList<Instinct> instincts) {
         this.instincts = instincts;
-        this.characteristics = characteristics;
+        this.jobs = new LinkedBlockingDeque<>();
     }
 
     public void run() {
-        Resident resident = instincts.get(0).resident;
-        /*if (!resident.getPlayerDisguise().isDisplayedInTab())
-            instincts.get(0).resident.getPlayerDisguise().setDisplayedInTab(true);*/
-        for (Task task : instincts) {
-            if (task.validate()) {
+        final Job currentJob = jobs.peek();
+        for (Instinct task : instincts) {
+            if ((currentJob == null || !currentJob.getIncompatibleInstincts().contains(task.getClass()))
+                    && task.validate()) {
                 task.run();
                 return;
             }
         }
 
-        if (work != null && work.validate()) {
-            work.run();
-        } else {
-            for (Task task : characteristics) {
-                if (task.validate()) {
-                    work = task;
-                    return;
-                }
+        if(currentJob != null) {
+            if(currentJob.finished()) {
+                jobs.remove();
+            } else {
+                currentJob.run();
             }
         }
+    }
+
+    public boolean append(Job job) {
+        return jobs.offerLast(job);
+    }
+
+    public boolean prepend(Job job) {
+        return jobs.offerFirst(job);
+    }
+
+    public void clearTasks() {
+        jobs.clear();
     }
 
     @Override

@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import java.io.*;
 
 import org.macroprod.civilization.Civilization;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.behaviour.TaskHandler;
 import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
@@ -27,6 +27,7 @@ public abstract class Resident extends ResidentAdapter {
 
     private final PlayerDisguise disguise;
     private final ResidentInventory inventory;
+    private final TaskHandler handler;
 
     static {
         try {
@@ -51,7 +52,7 @@ public abstract class Resident extends ResidentAdapter {
 
     public Resident(World world, String name) {
         super(world);
-        goalSelector.a(0, handler());
+        goalSelector.a(0, this.handler = handler());
         this.inventory = new ResidentInventory();
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(60);
 
@@ -185,25 +186,26 @@ public abstract class Resident extends ResidentAdapter {
      * Force override getOffers
      */
     @Override
-    public abstract MerchantRecipeList getOffers(EntityHuman human);
+    public MerchantRecipeList getOffers(EntityHuman human) {
+        return new MerchantRecipeList();
+    }
 
     /**
      * Creates a jobs handler that'll handle this resident's jobs
      */
     public final TaskHandler handler() {
-        return new TaskHandler(instincts(), tasks());
+        return new TaskHandler(instincts());
     }
 
     /**
      * Creates instincts list
      */
-    protected LinkedList<Task> instincts() {
-        LinkedList<Task> instincts = new LinkedList<>();
+    protected LinkedList<Instinct> instincts() {
+        LinkedList<Instinct> instincts = new LinkedList<>();
         instincts.add(new PickupItemInstinct(this));
         instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
-        //instincts.add(new StrollInstinct(this));
-        //instincts.add(new ChatInstinct(this));
-
+        instincts.add(new ChatInstinct(this));
+        instincts.add(new StrollInstinct(this));
 
         return instincts;
     }
@@ -214,11 +216,6 @@ public abstract class Resident extends ResidentAdapter {
     public ResidentInventory getInventory() {
         return this.inventory;
     }
-
-    /**
-     * Characteristics of the resident
-     */
-    public abstract LinkedList<Task> tasks();
 
     /**
      * Resident name
@@ -245,6 +242,10 @@ public abstract class Resident extends ResidentAdapter {
             }
         }
 
+    }
+
+    public TaskHandler getHandler() {
+        return handler;
     }
 
     /**

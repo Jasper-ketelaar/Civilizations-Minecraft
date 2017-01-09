@@ -4,13 +4,13 @@ import net.minecraft.server.v1_11_R1.EntityHuman;
 import net.minecraft.server.v1_11_R1.PathEntity;
 import net.minecraft.server.v1_11_R1.RandomPositionGenerator;
 import net.minecraft.server.v1_11_R1.Vec3D;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.Calculations;
 
 import java.util.Optional;
 
-public class StrollInstinct extends Task {
+public class StrollInstinct extends Instinct {
 
     private PathEntity target;
     private int index;

@@ -3,14 +3,8 @@ main:  org.macroprod.civilization.Civilization
 version: 1.0
 depend: [LibsDisguises, ProtocolLib]
 commands:
-  settler:
-    description: Spawns a miner villager
-    usage: /<command>
-  fuckbob:
-    description: test
-  fuckkevin:
-    description: Fucks klevin
   tp:
-    description: Tps
-  sm:
-    description: Send villager method
+    description: controls player teleports
+  slave:
+    description: Control slaves
+    usage: /<command> <instruction> <arguments>

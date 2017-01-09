@@ -1,22 +1,26 @@
-package org.macroprod.civilization.behaviour.instincts;
+package org.macroprod.civilization.behaviour.jobs;
 
 import net.minecraft.server.v1_11_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.TNTPrimed;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
+import org.macroprod.civilization.behaviour.Job;
+import org.macroprod.civilization.behaviour.instincts.StrollInstinct;
+import org.macroprod.civilization.behaviour.instincts.WatchInstinct;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.Calculations;
 
+import java.util.List;
 import java.util.Optional;
 
-public class TNTKevin extends Task {
-
-    private Optional<EntityHuman> oKevin;
+public class TNTKevin extends Job {
     private long time;
+    private final String partialTargetName;
 
-    public TNTKevin(Resident resident) {
+    public TNTKevin(Resident resident, String partialTargetName) {
         super(resident);
+        this.partialTargetName = partialTargetName;
     }
 
     @Override
@@ -24,7 +28,9 @@ public class TNTKevin extends Task {
         this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Blocks.TNT));
         this.resident.setSlot(EnumItemSlot.OFFHAND, new ItemStack(Items.FLINT_AND_STEEL));
 
-        if (oKevin.get() != null) {
+        Optional<EntityHuman> oKevin = this.resident.world.players.stream().filter(e -> e.getName().contains(partialTargetName)
+                && Calculations.distance(resident, e) < 50).findAny();
+        if (oKevin.isPresent()) {
             EntityHuman kevin = oKevin.get();
             kevin.recalcPosition();
 
@@ -60,11 +66,16 @@ public class TNTKevin extends Task {
         }
     }
 
-
+    @Override
+    public boolean finished() {
+        return false;
+    }
 
     @Override
-    public boolean validate() {
-        return  (oKevin = (this.resident.world.players.stream().filter(e -> e.getName().equalsIgnoreCase("kjcvheel") &&
-                Calculations.distance(resident, e) < 50)).findAny()).isPresent();
+    public List<Class<? extends Instinct>> getIncompatibleInstincts() {
+        List<Class<? extends Instinct>> incompatibilities = super.getIncompatibleInstincts();
+        incompatibilities.add(WatchInstinct.class);
+        incompatibilities.add(StrollInstinct.class);
+        return incompatibilities;
     }
 }

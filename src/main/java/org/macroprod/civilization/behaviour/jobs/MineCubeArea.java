@@ -1,5 +1,6 @@
 package org.macroprod.civilization.behaviour.jobs;
 
+import net.minecraft.server.v1_11_R1.Block;
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
@@ -7,6 +8,7 @@ import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.behaviour.Job;
 import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.Resident;
+import org.macroprod.civilization.util.Calculations;
 import org.macroprod.civilization.util.CubeBlockArea;
 
 import java.util.List;
@@ -34,6 +36,7 @@ public class MineCubeArea extends Job {
     @Override
     public void run() {
         if (target != null) {
+            System.out.println("Targeting");
             World world = resident.getWorld();
             this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
             if (mineBlock(resident, target)) {
@@ -64,9 +67,12 @@ public class MineCubeArea extends Job {
     }
 
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
-        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 3) {
-            resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
+        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 4) {
+            BlockPosition pos = Calculations.closestAirBlock(resident, blockPosition);
+            System.out.println(pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
+            resident.getNavigation().a(pos.getX(), pos.getY(), pos.getZ(), 0.5f);
         } else {
+            System.out.println("Damaging");
             return damageBlock(resident, blockPosition);
         }
         return false;

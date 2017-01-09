@@ -46,7 +46,7 @@ public class TNTKevin extends Task {
                     //Only plant on air block
                     if(resident.getWorld().getType(tnt).getBlock().getName().equals("Air")) {
                         world.spawn(new Location(world, tnt.getX(), tnt.getY(), tnt.getZ()), TNTPrimed.class);
-                        time = System.currentTimeMillis();
+                          time = System.currentTimeMillis();
                     }
                 } else {
                     //Chase

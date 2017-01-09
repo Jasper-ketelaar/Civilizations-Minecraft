@@ -2,14 +2,11 @@ package org.macroprod.civilization.behaviour;
 
 import org.macroprod.civilization.resident.Resident;
 
-/**
- * Created by jasperketelaar on 1/4/17.
- */
-public abstract class Task {
+public abstract class Instinct {
 
     protected final Resident resident;
 
-    public Task(Resident resident) {
+    public Instinct(Resident resident) {
         this.resident = resident;
     }
 

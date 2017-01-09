@@ -1,9 +1,10 @@
 package org.macroprod.civilization.behaviour.jobs;
 
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
+import org.macroprod.civilization.behaviour.Job;
 import org.macroprod.civilization.resident.Resident;
 
-public class FillHoles extends Task {
+public class FillHoles extends Job {
 
     public FillHoles(Resident resident) {
         super(resident);
@@ -15,7 +16,7 @@ public class FillHoles extends Task {
     }
 
     @Override
-    public boolean validate() {
+    public boolean finished() {
         return false;
     }
 }

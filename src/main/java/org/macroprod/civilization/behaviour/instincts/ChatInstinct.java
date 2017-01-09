@@ -1,18 +1,17 @@
 package org.macroprod.civilization.behaviour.instincts;
 
 import org.bukkit.craftbukkit.v1_11_R1.entity.CraftPlayer;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.resident.Resident;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
-public class ChatInstinct extends Task {
+public class ChatInstinct extends Instinct {
 
     private static long time = 0;
     private static long random = 5000;

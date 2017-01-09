@@ -3,7 +3,8 @@ package org.macroprod.civilization.behaviour.jobs;
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
+import org.macroprod.civilization.behaviour.Job;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.FlatBlockArea;
 
@@ -11,7 +12,7 @@ import java.util.LinkedList;
 import java.util.TreeMap;
 
 
-public class MineArea extends Task {
+public class MineArea extends Job {
     private static TreeMap<BlockPosition, Float> blockDamageMap = new TreeMap<>();
     FlatBlockArea area = null;
     long time = 0;
@@ -41,16 +42,9 @@ public class MineArea extends Task {
         }
     }
 
-    private void annoyingLog(String message, boolean annoying) {
-        if (!annoying || System.currentTimeMillis() - time > 10000) {
-            time = System.currentTimeMillis();
-            resident.world.getServer().broadcastMessage("[" + resident.getId() + "] " + message);
-        }
-    }
-
     @Override
-    public boolean validate() {
-        return resident.locY >= 6;
+    public boolean finished() {
+        return resident.locY == 6;
     }
 
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {

@@ -6,6 +6,14 @@ import net.minecraft.server.v1_11_R1.World;
 public class CubeBlockArea extends FlatBlockArea {
     private final int minY, maxY;
 
+    public CubeBlockArea(BlockPosition bp1, int width, int height, int length) {
+        this(bp1.getX(), bp1.getY(), bp1.getZ(), bp1.getX() + width, bp1.getY() + height, bp1.getZ() + length);
+    }
+
+    public CubeBlockArea(BlockPosition bp1, BlockPosition bp2) {
+        this(bp1.getX(), bp1.getY(), bp1.getZ(), bp2.getX(), bp2.getY(), bp2.getZ());
+    }
+
     public CubeBlockArea(int minX, int minY, int minZ, int maxX, int maxY, int maxZ) {
         super(minX, minZ, maxX, maxZ);
         this.minY = minY;
@@ -111,5 +119,10 @@ public class CubeBlockArea extends FlatBlockArea {
     public CubeBlockArea setWorld(World world) {
         super.setWorld(world);
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "FlatBlockArea[min{x:" + minX + ", y:" + minY + ", z:" + minZ + "}, max{x:" + maxX + ", y:" + maxY + ", z:" + maxZ + "}]";
     }
 }

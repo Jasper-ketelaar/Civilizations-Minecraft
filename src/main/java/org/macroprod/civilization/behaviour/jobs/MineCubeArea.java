@@ -3,29 +3,37 @@ package org.macroprod.civilization.behaviour.jobs;
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.Blocks;
 import net.minecraft.server.v1_11_R1.World;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
+import org.macroprod.civilization.behaviour.Job;
+import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.Resident;
 import org.macroprod.civilization.util.CubeBlockArea;
+
+import java.util.List;
 import java.util.TreeMap;
 
-public class MineCubeArea extends Task {
+public class MineCubeArea extends Job {
     private static TreeMap<BlockPosition, Float> blockDamageMap = new TreeMap<>();
-    private CubeBlockArea area = null;
-    private BlockPosition base = null;
-    private long time = 0;
+    private final CubeBlockArea area;
     private BlockPosition target = null;
 
     public MineCubeArea(Resident resident) {
+        this(resident, 10, 2, 10);
+    }
+
+    public MineCubeArea(Resident resident, int width, int height, int length) {
+        this(resident, (int)resident.locX, (int)resident.locY, (int)resident.locZ, width, height, length);
+    }
+
+    public MineCubeArea(Resident resident, int x, int y, int z, int width, int height, int length) {
         super(resident);
+        this.area = new CubeBlockArea(x, y ,z, x + width, y + (height > 2 ? 2 : height), z + length);
+        this.area.setWorld(resident.world);
     }
 
     @Override
     public void run() {
-        if (area == null) {
-            base = resident.getLocation();
-            area = new CubeBlockArea(base.getX() - 20, base.getY(), base.getZ() - 20, base.getX() + 20, base.getY() + 2, base.getZ() + 20).setWorld(resident.getWorld());
-            resident.getWorld().setTypeAndData(base.down(), Blocks.IRON_BLOCK.getBlockData(), 3);
-        } else if (target != null) {
+        if (target != null) {
             World world = resident.getWorld();
             this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
             if (mineBlock(resident, target)) {
@@ -36,30 +44,32 @@ public class MineCubeArea extends Task {
                 target = null;
             }
         } else {
-            target = area.findClosestBlock(base);
+            target = area.findClosestBlock(resident.getLocation());
             System.out.println(target != null ? target.getX() + ":" + target.getY() + ":" + target.getZ() : "No target.");
         }
     }
 
-    private void annoyingLog(String message, boolean annoying) {
-        if (!annoying || System.currentTimeMillis() - time > 10000) {
-            time = System.currentTimeMillis();
-            resident.world.getServer().broadcastMessage("[" + resident.getId() + "] " + message);
-        }
+    @Override
+    public boolean finished() {
+        return false; //TODO
     }
 
     @Override
-    public boolean validate() {
-        return resident.locY >= 6;
+    public List<Class<? extends Instinct>> getIncompatibleInstincts() {
+        final List<Class<? extends Instinct>> incompatibilities = super.getIncompatibleInstincts();
+        incompatibilities.add(PickupItemInstinct.class);
+        incompatibilities.add(StrollInstinct.class);
+        incompatibilities.add(WatchInstinct.class);
+        return incompatibilities;
     }
 
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
         if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 3) {
-            boolean navigate = resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
-            return false;
+            resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
         } else {
             return damageBlock(resident, blockPosition);
         }
+        return false;
     }
 
     private boolean damageBlock(Resident resident, BlockPosition blockPosition) {

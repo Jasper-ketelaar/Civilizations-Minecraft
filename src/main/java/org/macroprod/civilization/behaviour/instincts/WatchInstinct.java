@@ -6,12 +6,9 @@ import net.minecraft.server.v1_11_R1.Entity;
 import net.minecraft.server.v1_11_R1.EntityPlayer;
 import net.minecraft.server.v1_11_R1.IEntitySelector;
 import org.macroprod.civilization.resident.Resident;
-import org.macroprod.civilization.behaviour.Task;
+import org.macroprod.civilization.behaviour.Instinct;
 
-/**
- * Created by jasperketelaar on 1/5/17.
- */
-public class WatchInstinct extends Task {
+public class WatchInstinct extends Instinct {
 
     private final Class<? extends Entity> cls;
     private final float distance;

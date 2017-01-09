@@ -64,7 +64,7 @@ public class TNTKevin extends Task {
 
     @Override
     public boolean validate() {
-        return  (oKevin = (this.resident.world.players.stream().filter(e -> e.getName().equalsIgnoreCase("andrew4213") &&
+        return  (oKevin = (this.resident.world.players.stream().filter(e -> e.getName().equalsIgnoreCase("kjcvheel") &&
                 Calculations.distance(resident, e) < 50)).findAny()).isPresent();
     }
 }

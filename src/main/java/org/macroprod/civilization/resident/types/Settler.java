@@ -14,6 +14,10 @@ public class Settler extends Resident {
         super(world);
     }
 
+    public Settler(World world, String name) {
+        super(world, name);
+    }
+
     @Override
     public int getCareer() {
         return 0;

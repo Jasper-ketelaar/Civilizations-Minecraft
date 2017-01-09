@@ -136,9 +136,8 @@ public abstract class Resident extends ResidentAdapter {
                 }
             }
         }
-        disguise.setDisplayedInTab(false);
         world.getServer().broadcastMessage("§E" + this.getCustomName() + " left the game");
-        Civilization.getInstance().remove(this);
+        //Civilization.getInstance().remove(this);
         super.die();
     }
 

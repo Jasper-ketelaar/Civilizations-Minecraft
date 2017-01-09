@@ -1,5 +1,8 @@
 package org.macroprod.civilization;
 
+import net.minecraft.server.v1_11_R1.EntityPlayer;
+import net.minecraft.server.v1_11_R1.EntityVillager;
+import net.minecraft.server.v1_11_R1.Village;
 import net.minecraft.server.v1_11_R1.World;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -25,9 +28,8 @@ import org.macroprod.civilization.util.entities.CustomEntities;
  */
 public class Civilization extends JavaPlugin implements Listener {
 
-    private final ArrayList<Resident> residents = new ArrayList<>();
-
     private static Civilization instance;
+    private final ArrayList<Resident> residents = new ArrayList<>();
 
     public static Civilization getInstance() {
         return instance;
@@ -45,51 +47,90 @@ public class Civilization extends JavaPlugin implements Listener {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             World world = ((CraftWorld) player.getWorld()).getHandle();
-            if ((sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078")) && label.equalsIgnoreCase("settler")) {
-                int amt = 1;
-                if (opts.length > 0)
-                    amt = Integer.parseInt(opts[0]);
-                for (int i = 0; i < amt; i++) {
-                    Settler settler = new Settler(world);
-                    Location location = player.getLocation();
-                    settler.setLocation(location.getX() + i * 5, location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                    world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
-                return true;
-            }
 
-            if ((sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078")) && label.equalsIgnoreCase("fuckkevin")) {
-                KevinTroller troller = new KevinTroller(world);
-                Location location = player.getLocation();
-                troller.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                world.addEntity(troller, CreatureSpawnEvent.SpawnReason.CUSTOM);
-            }
-            if (label.equals("fuckbob")) {
-                for (Entity entity : player.getWorld().getEntities()) {
-                    if (entity instanceof Villager) {
-                        ((Villager) entity).setHealth(0);
+            if ((sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078"))) {
+                if (label.equalsIgnoreCase("settler")) {
+                    int amt = 1;
+                    if (opts.length == 1) {
+                        Settler settler = new Settler(world, opts[0]);
+                        Location location = player.getLocation();
+                        settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                        world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        return true;
+                    }
+                    if (opts.length > 1)
+                        amt = Integer.parseInt(opts[1]);
+                    for (int i = 0; i < amt; i++) {
+                        Settler settler = new Settler(world);
+                        Location location = player.getLocation();
+                        settler.setLocation(location.getX() + i * 5, location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                        world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    return true;
+                }
+
+                if (label.equalsIgnoreCase("fuckkevin")) {
+                    KevinTroller troller = new KevinTroller(world);
+                    Location location = player.getLocation();
+                    troller.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                    world.addEntity(troller, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+
+                if (label.equals("fuckbob")) {
+                    for (net.minecraft.server.v1_11_R1.Entity entity : world.entityList) {
+                        if (entity instanceof net.minecraft.server.v1_11_R1.EntityVillager) {
+
+                            entity.die();
+                            //((Villager) entity).setHealth(0);
+                        }
+                    }
+                }
+
+                if (label.equals("sm")) {
+                    if (opts.length > 1) {
+                        StringBuilder builder = new StringBuilder();
+                        for (int i = 1; i < opts.length; i++) {
+                            builder.append(opts[i]).append(" ");
+                        }
+
+                        for (Resident resident : residents) {
+                            if (resident.getCustomName().equalsIgnoreCase(opts[0])) {
+                                player.teleport(resident.getBukkitEntity());
+                                world.getServer().broadcastMessage("<" + opts[0] + "> " + builder.toString());
+                                return true;
+                            }
+                        }
                     }
                 }
             }
 
-            /*if (label.equalsIgnoreCase("tp")) {
-                if (opts.length > 0 && sender.getServer().getPlayer(opts[0]) != null) {
+
+            if (label.equalsIgnoreCase("tp")) {
+                if (opts.length > 0) {
+                    if (opts.length > 1) {
+                        String to = opts[1];
+                        for (Resident resident : residents) {
+                            if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
+                                Player player1 = resident.world.getServer().getPlayer(to);
+                                resident.setLocation(player1.getLocation().getBlockX(), player1.getLocation().getBlockY(), player1.getLocation().getBlockZ(), player1.getLocation().getYaw(), player1.getLocation().getPitch());
+                                return true;
+                            }
+                        }
+                    }
                     for (Resident resident : residents) {
-                        if (resident.getCustomName().equalsIgnoreCase(opts[0])) {
+                        if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
                             player.teleport(resident.getBukkitEntity());
                             return true;
                         }
                     }
-                } else {
-                    StringBuilder builder = new StringBuilder(label);
+                    StringBuilder builder = new StringBuilder("teleport");
                     for (String opt : opts) {
-                        builder.append(" ");
-                        builder.append(opt);
+                        builder.append(" ").append(opt);
                     }
-                    return Bukkit.dispatchCommand(sender, builder.toString());
+                    return this.getServer().dispatchCommand(sender, builder.toString());
                 }
 
-            }*/
+            }
         }
         return false;
 

@@ -10,3 +10,7 @@ commands:
     description: test
   fuckkevin:
     description: Fucks klevin
+  tp:
+    description: Tps
+  sm:
+    description: Send villager method

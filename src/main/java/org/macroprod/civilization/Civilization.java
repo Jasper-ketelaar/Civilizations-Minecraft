@@ -1,5 +1,6 @@
 package org.macroprod.civilization;
 
+import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.World;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -56,7 +57,6 @@ public class Civilization extends JavaPlugin implements Listener {
 
                     if (opts.length > 0) {
                         final String instruction = opts[0];
-
                         /**
                          * Kill all residents
                          */
@@ -117,7 +117,10 @@ public class Civilization extends JavaPlugin implements Listener {
                                         params[0] = resident;
                                         for (int i = 1; i < arguments.length; i++) {
                                             //Don't look at this pretty execution
-                                            try {
+                                            if(arguments[i].equalsIgnoreCase("myloc")) {
+                                                Location l = ((Player) sender).getPlayer().getLocation();
+                                                params[i] = new BlockPosition(l.getBlockX(), l.getBlockX(), l.getBlockZ());
+                                            } else try {
                                                 params[i] = Integer.valueOf(arguments[i]);
                                             } catch (Exception e) {
                                                 params[i] = arguments[i];

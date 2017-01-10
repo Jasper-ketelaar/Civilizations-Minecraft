@@ -25,6 +25,10 @@ public class MineCubeArea extends Job {
         this(resident, (int)resident.locX, (int)resident.locY, (int)resident.locZ, width, height, length);
     }
 
+    public MineCubeArea(Resident resident, BlockPosition bp, int width, int height, int length) {
+        this(resident, bp.getX(), bp.getY(), bp.getZ(), width, height, length);
+    }
+
     public MineCubeArea(Resident resident, int x, int y, int z, int width, int height, int length) {
         super(resident);
         this.area = new CubeBlockArea(x, y ,z, x + width, y + (height > 2 ? 2 : height), z + length);
@@ -45,7 +49,6 @@ public class MineCubeArea extends Job {
             }
         } else {
             target = area.findClosestBlock(resident.getLocation());
-            System.out.println(target != null ? target.getX() + ":" + target.getY() + ":" + target.getZ() : "No target.");
         }
     }
 

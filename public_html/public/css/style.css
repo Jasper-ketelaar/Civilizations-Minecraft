@@ -1,29 +1,64 @@
-.login {
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background-color: lightgray;
+}
+
+.panel.login {
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
-
-    margin-top: 10%;
-    height: 50%;
-}
-
-.login .form-login h3 {
-    text-align: center;
-    margin-bottom: 10%;
-}
-
-.login .form-login h4 {
+    margin-top: 15em;
+    width: 35rem;
+    height: 30rem;
     text-align: center;
 }
 
-.login .form-login {
-    width: 150%;
+.panel.login .panel-heading {
+    padding: 0.5em;
+    margin-bottom: 4em;
 }
 
-.login a.btn.btn-primary.btn-lg {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    float: left;
+.panel.login .form-login input {
+    margin-bottom: 1em;
+}
 
+.panel.login .form-login .row {
+    margin-bottom: 1em;
+}
+
+.panel.login .form-login .btn {
+    width: 100%;
+}
+
+.dashboard {
+    background-color: white;
+}
+
+.dashboard .options-container {
+    padding: 0;
+}
+
+.dashboard .panel {
+    height: 100vh;
+}
+
+.dashboard .panel .panel-body {
+    padding-right: 0;
+    padding-left: 0                     ;
+}
+
+.dashboard .nav-stacked li span {
+    margin-right: 2em;
+    padding-bottom: .3em;
+    padding-top: .3em;
+}
+
+.dashboard .nav-stacked li span + span {
+    float: right;
+    margin-top: .2em;
+    margin-right: -1em;
+    font-size: .8em;
 }

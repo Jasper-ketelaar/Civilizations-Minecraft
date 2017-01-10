@@ -204,7 +204,7 @@ public abstract class Resident extends ResidentAdapter {
         LinkedList<Instinct> instincts = new LinkedList<>();
         instincts.add(new PickupItemInstinct(this));
         instincts.add(new WatchInstinct(this, EntityPlayer.class, 7));
-        instincts.add(new ChatInstinct(this));
+        //instincts.add(new ChatInstinct(this));
         instincts.add(new StrollInstinct(this));
 
         return instincts;

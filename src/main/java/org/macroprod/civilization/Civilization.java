@@ -2,6 +2,7 @@ package org.macroprod.civilization;
 
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.World;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -42,57 +43,128 @@ public class Civilization extends JavaPlugin implements Listener {
         CustomEntities.registerEntities();
     }
 
+    private Player victim;
+    private final HashMap<String, Object> storage = new HashMap<>();
     private final HashMap<String, Resident> target = new HashMap<>();
     private Class<? extends Job>[] classes = new Class[]{ChestStorage.class, FillHoles.class, MineArea.class, MineCubeArea.class, TNTKevin.class};
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] opts) {
+        Player player = null;
         if (sender instanceof Player) {
-            Player player = (Player) sender;
-            World world = ((CraftWorld) player.getWorld()).getHandle();
-            if ((sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078"))) {
-                if (label.equalsIgnoreCase("slave") && opts.length > 0) {
-                    final String[] arguments = new String[opts.length - 1];
-                    System.arraycopy(opts, 1, arguments, 0, arguments.length);
+            player = (Player) sender;
 
-                    if (opts.length > 0) {
-                        final String instruction = opts[0];
-                        /**
-                         * Kill all residents
-                         */
-                        if(instruction.equalsIgnoreCase("kill") && arguments.length == 1 && arguments[0].equalsIgnoreCase("all")) {
-                            for (net.minecraft.server.v1_11_R1.Entity entity : world.entityList) {
-                                if (entity instanceof net.minecraft.server.v1_11_R1.EntityVillager) {
-                                    entity.die();
-                                }
+            if(label.equalsIgnoreCase("store")) {
+                if(opts.length > 1) {
+                    String task = opts[0];
+                    if(task.equalsIgnoreCase("pos")) {
+                        Location l = ((Player) sender).getPlayer().getLocation();
+                        storage.put(opts[1], new BlockPosition(l.getBlockX(), l.getBlockY(), l.getBlockZ()));
+                        sender.sendMessage("Stored BlockPosition[x: " + l.getBlockX() + ", y: " + l.getBlockY() + ", z: " + l.getBlockZ() + "] as '" + opts[1] + "'.");
+                        return true;
+                    } else if(task.equalsIgnoreCase("pos-down")) {
+                        Location l = ((Player) sender).getPlayer().getLocation();
+                        storage.put(opts[1], new BlockPosition(l.getBlockX(), l.getBlockY(), l.getBlockZ()).down());
+                        sender.sendMessage("Stored BlockPosition[x: " + l.getBlockX() + ", y: " + l.getBlockY() + ", z: " + l.getBlockZ() + "] as '" + opts[1] + "'.");
+                        return true;
+                    } else if(task.equalsIgnoreCase("int") && opts.length > 2) {
+                        storage.put(opts[1], Integer.valueOf(opts[2]));
+                        sender.sendMessage("Stored Integer[" + opts[2] + "] as '" + opts[1] + "'.");
+                        return true;
+                    }
+                }
+            }
+
+            if (label.equalsIgnoreCase("tp")) {
+                if (opts.length > 0) {
+                    if (opts.length > 1) {
+                        String to = opts[1];
+                        for (Resident resident : residents) {
+                            if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
+                                Player player1 = resident.world.getServer().getPlayer(to);
+                                resident.setLocation(player1.getLocation().getBlockX(), player1.getLocation().getBlockY(), player1.getLocation().getBlockZ(), player1.getLocation().getYaw(), player1.getLocation().getPitch());
+                                return true;
                             }
-                            sender.sendMessage("Cleared all slaves.");
                         }
+                    }
+                    for (Resident resident : residents) {
+                        if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
+                            player.teleport(resident.getBukkitEntity());
+                            return true;
+                        }
+                    }
+                    StringBuilder builder = new StringBuilder("teleport");
+                    for (String opt : opts) {
+                        builder.append(" ").append(opt);
+                    }
+                    return this.getServer().dispatchCommand(sender, builder.toString());
+                }
+            }
+        }
 
-                        /**
-                         * Spawns a resident with (optionally) a given name
-                         */
-                        else if (instruction.equalsIgnoreCase("spawn")) {
-                            if (arguments.length == 0) {
-                                Settler settler = new Settler(world);
-                                Location location = player.getLocation();
-                                settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                                world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                                target.put(sender.getName(), settler);
-                            } else {
-                                Settler settler = new Settler(world, arguments[0]);
-                                Location location = player.getLocation();
-                                settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
-                                world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                                target.put(sender.getName(), settler);
+        if(player == null && label.equalsIgnoreCase("slave")) {
+            if(opts[0].equalsIgnoreCase("victimise") && opts.length == 2) {
+                for (net.minecraft.server.v1_11_R1.Entity entity : ((CraftWorld) Bukkit.getServer().getWorld("world")).getHandle().entityList) {
+                    if (entity instanceof net.minecraft.server.v1_11_R1.EntityPlayer && entity.getName().equalsIgnoreCase(opts[1])) {
+                        victim = (Player) entity.getBukkitEntity();
+                        sender.sendMessage("Added a new target (" + victim.getName() + ").");
+                        return true;
+                    }
+                }
+                sender.sendMessage("Victim not found, did you type the name correctly? (" + opts[1] + ").");
+                return true;
+            } else if(victim == null) {
+                sender.sendMessage("Please select a target first, usage: /slave victimise <user>");
+                return true;
+            }
+        }
+
+        if ((player == null && victim != null) || (sender.getName().equalsIgnoreCase("andrew4213") || sender.getName().equalsIgnoreCase("jasper078"))) {
+            if(player == null) player = victim;
+            World world = ((CraftWorld) player.getWorld()).getHandle();
+
+            if (label.equalsIgnoreCase("slave") && opts.length > 0) {
+                final String[] arguments = new String[opts.length - 1];
+                System.arraycopy(opts, 1, arguments, 0, arguments.length);
+
+                if (opts.length > 0) {
+                    final String instruction = opts[0];
+                    /**
+                     * Kill all residents
+                     */
+                    if(instruction.equalsIgnoreCase("kill") && arguments.length == 1 && arguments[0].equalsIgnoreCase("all")) {
+                        for (net.minecraft.server.v1_11_R1.Entity entity : world.entityList) {
+                            if (entity instanceof net.minecraft.server.v1_11_R1.EntityVillager) {
+                                entity.die();
                             }
-                            sender.sendMessage("Spawned new slave and selected as target.");
-                        } else
+                        }
+                        sender.sendMessage("Cleared all slaves.");
+                    }
 
-                        /**
-                         * Selects a resident as target
-                         */
-                            if (instruction.equalsIgnoreCase("select")) {
+                    /**
+                     * Spawns a resident with (optionally) a given name
+                     */
+                    else if (instruction.equalsIgnoreCase("spawn")) {
+                        if (arguments.length == 0) {
+                            Settler settler = new Settler(world);
+                            Location location = player.getLocation();
+                            settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                            world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                            target.put(sender.getName(), settler);
+                        } else {
+                            Settler settler = new Settler(world, arguments[0]);
+                            Location location = player.getLocation();
+                            settler.setLocation(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+                            world.addEntity(settler, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                            target.put(sender.getName(), settler);
+                        }
+                        sender.sendMessage("Spawned new slave and selected as target.");
+                    } else
+
+                    /**
+                     * Selects a resident as target
+                     */
+                        if (instruction.equalsIgnoreCase("select")) {
                             for (Resident resident : residents) {
                                 if (resident.getCustomName().equalsIgnoreCase(arguments[0])) {
                                     target.put(sender.getName(), resident);
@@ -117,9 +189,8 @@ public class Civilization extends JavaPlugin implements Listener {
                                         params[0] = resident;
                                         for (int i = 1; i < arguments.length; i++) {
                                             //Don't look at this pretty execution
-                                            if(arguments[i].equalsIgnoreCase("myloc")) {
-                                                Location l = ((Player) sender).getPlayer().getLocation();
-                                                params[i] = new BlockPosition(l.getBlockX(), l.getBlockX(), l.getBlockZ());
+                                            if(storage.containsKey(arguments[i])) {
+                                                params[i] = storage.get(arguments[i]);
                                             } else try {
                                                 params[i] = Integer.valueOf(arguments[i]);
                                             } catch (Exception e) {
@@ -180,39 +251,12 @@ public class Civilization extends JavaPlugin implements Listener {
                         } else {
                             sender.sendMessage("Error, please first use: /slave select <name>");
                         }
-                        return true;
-                    }
-                    return false;
+                    return true;
                 }
-            }
-
-
-            if (label.equalsIgnoreCase("tp")) {
-                if (opts.length > 0) {
-                    if (opts.length > 1) {
-                        String to = opts[1];
-                        for (Resident resident : residents) {
-                            if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
-                                Player player1 = resident.world.getServer().getPlayer(to);
-                                resident.setLocation(player1.getLocation().getBlockX(), player1.getLocation().getBlockY(), player1.getLocation().getBlockZ(), player1.getLocation().getYaw(), player1.getLocation().getPitch());
-                                return true;
-                            }
-                        }
-                    }
-                    for (Resident resident : residents) {
-                        if (resident.getCustomName().equalsIgnoreCase(opts[0]) && resident.isAlive()) {
-                            player.teleport(resident.getBukkitEntity());
-                            return true;
-                        }
-                    }
-                    StringBuilder builder = new StringBuilder("teleport");
-                    for (String opt : opts) {
-                        builder.append(" ").append(opt);
-                    }
-                    return this.getServer().dispatchCommand(sender, builder.toString());
-                }
+                return false;
             }
         }
+
         return false;
 
     }

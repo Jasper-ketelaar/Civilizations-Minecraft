@@ -1,9 +1,6 @@
 package org.macroprod.civilization.behaviour.jobs;
 
-import net.minecraft.server.v1_11_R1.Block;
-import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.Blocks;
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.behaviour.Job;
 import org.macroprod.civilization.behaviour.instincts.*;
@@ -39,6 +36,7 @@ public class MineCubeArea extends Job {
 
     @Override
     public void run() {
+        this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.DIAMOND_PICKAXE));
         if (target != null) {
             World world = resident.getWorld();
             this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());

@@ -46,7 +46,10 @@ public class Civilization extends JavaPlugin implements Listener {
     private Player victim;
     private final HashMap<String, Object> storage = new HashMap<>();
     private final HashMap<String, Resident> target = new HashMap<>();
-    private Class<? extends Job>[] classes = new Class[]{ChestStorage.class, FillHoles.class, MineArea.class, MineCubeArea.class, TNTKevin.class};
+    private Class<? extends Job>[] classes = new Class[]{
+            ChestStorage.class, FillHoles.class, MineArea.class,
+            MineCubeArea.class, TNTKevin.class, FollowEntity.class
+    };
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] opts) {

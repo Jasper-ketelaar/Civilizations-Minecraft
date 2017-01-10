@@ -36,19 +36,23 @@ public class MineCubeArea extends Job {
 
     @Override
     public void run() {
-        this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.DIAMOND_PICKAXE));
-        if (target != null) {
-            World world = resident.getWorld();
-            this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
-            if (mineBlock(resident, target)) {
-                BlockPosition harnessBlock = target.down();
-                if (!world.getType(harnessBlock).getMaterial().isSolid()) {
-                    world.setTypeAndData(harnessBlock, Blocks.COBBLESTONE.getBlockData(), 3);
-                }
-                target = null;
-            }
+        if(!resident.getInventory().hasEmptySlot()) {
+            resident.getHandler().prepend(new ChestStorage(resident));
         } else {
-            target = area.findClosestBlock(resident.getLocation());
+            this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.DIAMOND_PICKAXE));
+            if (target != null) {
+                World world = resident.getWorld();
+                this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
+                if (mineBlock(resident, target)) {
+                    BlockPosition harnessBlock = target.down();
+                    if (!world.getType(harnessBlock).getMaterial().isSolid()) {
+                        world.setTypeAndData(harnessBlock, Blocks.COBBLESTONE.getBlockData(), 3);
+                    }
+                    target = null;
+                }
+            } else {
+                target = area.findClosestBlock(resident.getLocation());
+            }
         }
     }
 

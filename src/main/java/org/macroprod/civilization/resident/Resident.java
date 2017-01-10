@@ -16,6 +16,7 @@ import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.adapter.ResidentAdapter;
 import org.macroprod.civilization.resident.inventory.ResidentInventory;
 import org.macroprod.civilization.util.Calculations;
+import org.macroprod.civilization.util.api.items.Inventory;
 
 import java.util.*;
 
@@ -27,6 +28,7 @@ public abstract class Resident extends ResidentAdapter {
 
     private final PlayerDisguise disguise;
     private final ResidentInventory inventory;
+    private final Inventory residentItems;
     private final TaskHandler handler;
 
     static {
@@ -39,7 +41,7 @@ public abstract class Resident extends ResidentAdapter {
             if (!file.exists())
                 file.createNewFile();
             BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 NAMES.add(line.split(" ")[0]);
             }
@@ -54,7 +56,8 @@ public abstract class Resident extends ResidentAdapter {
         super(world);
         goalSelector.a(0, this.handler = handler());
         this.inventory = new ResidentInventory();
-        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(60);
+        this.residentItems = new Inventory(this.getRawInventory());
+        this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(100);
 
         this.setCustomName(name);
         world.getServer().broadcastMessage("§E" + name + " joined the game");
@@ -130,8 +133,8 @@ public abstract class Resident extends ResidentAdapter {
 
     @Override
     public void die() {
-        if (this.getInventory() != null) {
-            for (ItemStack itemStack : this.getInventory()) {
+        if (this.getRawInventory() != null) {
+            for (ItemStack itemStack : this.getRawInventory()) {
                 if (itemStack != null && itemStack.getCount() > 0 && this.world != null && this.getLocation() != null) {
                     Block.a(this.world, this.getLocation(), itemStack);
                 }
@@ -213,8 +216,12 @@ public abstract class Resident extends ResidentAdapter {
     /**
      * Gets inventory
      */
-    public ResidentInventory getInventory() {
+    public ResidentInventory getRawInventory() {
         return this.inventory;
+    }
+
+    public Inventory getInventory() {
+        return residentItems;
     }
 
     /**

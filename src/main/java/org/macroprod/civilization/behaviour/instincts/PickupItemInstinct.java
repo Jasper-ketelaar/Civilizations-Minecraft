@@ -31,12 +31,14 @@ public class PickupItemInstinct extends Instinct {
     @Override
     public boolean validate() {
         array = resident.world.entityList.stream().filter((e) -> e instanceof EntityItem
-                && !resident.getInventory().isFull(((EntityItem) e).getItemStack().getItem())
+                && !resident.getRawInventory().isFull(((EntityItem) e).getItemStack().getItem())
                 && Math.abs(e.locY - resident.locY) < 3
                 && Calculations.distance(resident, e) < 60
         ).toArray();
 
         Arrays.sort(array, (o1, o2) -> {
+            if(o1 == null && o2 == null)
+                return 0;
             if (o1 == null)
                 return 1;
             if (o2 == null)

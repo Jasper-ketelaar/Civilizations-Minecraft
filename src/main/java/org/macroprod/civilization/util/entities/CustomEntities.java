@@ -19,8 +19,8 @@ public enum CustomEntities {
     /**
      * Replace the default Minecraft civilization with our simpleton residents
      */
-    SETTLER("Settler", 121, EntityType.VILLAGER, Settler.class, Settler.class),
-    MINER("Miner", 122, EntityType.VILLAGER, Settler.class, Miner.class);
+    SETTLER("Settler", 121, EntityType.VILLAGER, EntityVillager.class, Settler.class),
+    MINER("Miner", 122, EntityType.VILLAGER, EntityVillager.class, Miner.class);
 
 
 

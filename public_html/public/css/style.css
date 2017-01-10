@@ -7,6 +7,7 @@ body {
     background-color: lightgray;
 }
 
+/* LOGIN PAGE CSS */
 .panel.login {
     margin-left: auto;
     margin-right: auto;
@@ -33,21 +34,24 @@ body {
     width: 100%;
 }
 
+
 .dashboard {
-    background-color: white;
+
 }
 
+/* DASHBOARD OPTIONS PANEL CSS */
 .dashboard .options-container {
     padding: 0;
 }
 
-.dashboard .panel {
+.dashboard .options-container .panel {
     height: 100vh;
+    background-color: ghostwhite;
 }
 
-.dashboard .panel .panel-body {
+.dashboard .options-container .panel .panel-body {
     padding-right: 0;
-    padding-left: 0                     ;
+    padding-left: 0;
 }
 
 .dashboard .nav-stacked li span {
@@ -61,4 +65,62 @@ body {
     margin-top: .2em;
     margin-right: -1em;
     font-size: .8em;
+}
+
+.dashboard .dashboard-section {
+    height: 92vh;
+}
+
+.dashboard .dashboard-section .panel {
+    height: inherit;
+    margin-right: 4em;
+    border: 0;
+}
+
+.dashboard .dashboard-section .panel .panel-heading {
+    text-align: center;
+    color: white;
+    margin-bottom: 2em;
+}
+
+/* CSS FOR CONSOLE */
+.dashboard .dashboard-section .panel .console-section .command input {
+    width: 100%;
+}
+
+.dashboard .dashboard-section .panel .console-section .command a.btn {
+    width: 100%;
+}
+
+.dashboard .dashboard-section .panel .console-section .console {
+    border: 1px solid gray;
+    height: 70vh;
+    padding: 5px 15px;
+    background-color: gray;
+    overflow-y: scroll;
+}
+
+.dashboard .dashboard-section .panel .console-section ul.console li {
+    margin-left: 5px;
+    color: white;
+    font-family: "Courier New";
+    font-size: 9pt;
+    letter-spacing: -.5px;
+}
+
+.dashboard .dashboard-section .panel .console-section .console::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.96);
+    border-radius: 4px;
+    background-color: #F5F5F5;
+}
+
+.dashboard .dashboard-section .panel .console-section .console::-webkit-scrollbar {
+    width: 12px;
+    background-color: gray;
+}
+
+.dashboard .dashboard-section .panel .console-section .console::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #D62929;
 }

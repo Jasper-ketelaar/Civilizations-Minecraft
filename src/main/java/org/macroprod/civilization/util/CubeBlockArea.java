@@ -1,5 +1,6 @@
 package org.macroprod.civilization.util;
 
+import net.minecraft.server.v1_11_R1.BlockChest;
 import net.minecraft.server.v1_11_R1.BlockPosition;
 import net.minecraft.server.v1_11_R1.World;
 
@@ -93,7 +94,7 @@ public class CubeBlockArea extends FlatBlockArea {
     }
 
     private boolean isSolid(final BlockPosition bp) {
-        return world.getType(bp).getMaterial().isSolid();
+        return world.getType(bp).getMaterial().isSolid() && !(world.getType(bp).getBlock() instanceof BlockChest);
     }
 
 

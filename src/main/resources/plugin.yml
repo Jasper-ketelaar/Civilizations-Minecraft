@@ -8,3 +8,6 @@ commands:
   slave:
     description: Control slaves
     usage: /<command> <instruction> <arguments>
+  store:
+    description: Command data store
+    usage: /<command>

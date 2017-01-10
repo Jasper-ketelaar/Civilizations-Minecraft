@@ -1,12 +1,11 @@
 package org.macroprod.civilization.behaviour.jobs;
 
-import net.minecraft.server.v1_11_R1.BlockPosition;
-import net.minecraft.server.v1_11_R1.Blocks;
-import net.minecraft.server.v1_11_R1.World;
+import net.minecraft.server.v1_11_R1.*;
 import org.macroprod.civilization.behaviour.Instinct;
 import org.macroprod.civilization.behaviour.Job;
 import org.macroprod.civilization.behaviour.instincts.*;
 import org.macroprod.civilization.resident.Resident;
+import org.macroprod.civilization.util.Calculations;
 import org.macroprod.civilization.util.CubeBlockArea;
 
 import java.util.List;
@@ -25,6 +24,10 @@ public class MineCubeArea extends Job {
         this(resident, (int)resident.locX, (int)resident.locY, (int)resident.locZ, width, height, length);
     }
 
+    public MineCubeArea(Resident resident, BlockPosition bp, int width, int height, int length) {
+        this(resident, bp.getX(), bp.getY(), bp.getZ(), width, height, length);
+    }
+
     public MineCubeArea(Resident resident, int x, int y, int z, int width, int height, int length) {
         super(resident);
         this.area = new CubeBlockArea(x, y ,z, x + width, y + (height > 2 ? 2 : height), z + length);
@@ -33,19 +36,23 @@ public class MineCubeArea extends Job {
 
     @Override
     public void run() {
-        if (target != null) {
-            World world = resident.getWorld();
-            this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
-            if (mineBlock(resident, target)) {
-                BlockPosition harnessBlock = target.down();
-                if (!world.getType(harnessBlock).getMaterial().isSolid()) {
-                    world.setTypeAndData(harnessBlock, Blocks.COBBLESTONE.getBlockData(), 3);
-                }
-                target = null;
-            }
+        if(!resident.getInventory().hasEmptySlot()) {
+            resident.getHandler().prepend(new ChestStorage(resident));
         } else {
-            target = area.findClosestBlock(resident.getLocation());
-            System.out.println(target != null ? target.getX() + ":" + target.getY() + ":" + target.getZ() : "No target.");
+            this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Items.DIAMOND_PICKAXE));
+            if (target != null) {
+                World world = resident.getWorld();
+                this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
+                if (mineBlock(resident, target)) {
+                    BlockPosition harnessBlock = target.down();
+                    if (!world.getType(harnessBlock).getMaterial().isSolid()) {
+                        world.setTypeAndData(harnessBlock, Blocks.COBBLESTONE.getBlockData(), 3);
+                    }
+                    target = null;
+                }
+            } else {
+                target = area.findClosestBlock(resident.getLocation());
+            }
         }
     }
 
@@ -64,8 +71,9 @@ public class MineCubeArea extends Job {
     }
 
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
-        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 3) {
-            resident.getNavigation().a(blockPosition.getX(), blockPosition.getY(), blockPosition.getZ(), 0.5f);
+        if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 4) {
+            BlockPosition pos = Calculations.closestAirBlock(resident, blockPosition);
+            resident.getNavigation().a(pos.getX(), pos.getY(), pos.getZ(), 0.5f);
         } else {
             return damageBlock(resident, blockPosition);
         }

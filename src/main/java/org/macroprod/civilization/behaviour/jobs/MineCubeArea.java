@@ -40,7 +40,6 @@ public class MineCubeArea extends Job {
     @Override
     public void run() {
         if (target != null) {
-            System.out.println("Targeting");
             World world = resident.getWorld();
             this.resident.getControllerLook().a(target.getX(), target.getY(), target.getZ(), this.resident.cL(), this.resident.N());
             if (mineBlock(resident, target)) {
@@ -72,10 +71,8 @@ public class MineCubeArea extends Job {
     private boolean mineBlock(Resident resident, BlockPosition blockPosition) {
         if (distance(new BlockPosition(resident.locX, resident.locY, resident.locZ), blockPosition) > 4) {
             BlockPosition pos = Calculations.closestAirBlock(resident, blockPosition);
-            System.out.println(pos.getX() + ", " + pos.getY() + ", " + pos.getZ());
             resident.getNavigation().a(pos.getX(), pos.getY(), pos.getZ(), 0.5f);
         } else {
-            System.out.println("Damaging");
             return damageBlock(resident, blockPosition);
         }
         return false;

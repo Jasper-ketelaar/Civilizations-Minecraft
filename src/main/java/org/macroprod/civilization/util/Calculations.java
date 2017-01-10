@@ -25,4 +25,13 @@ public class Calculations {
     public static Vec3D vectorBetween(Entity from, Entity to) {
         return new Vec3D(from.locX - to.locX, from.locY - to.locY, from.locZ - to.locZ);
     }
+
+    public static BlockPosition closestAirBlock(Entity from, BlockPosition stone) {
+        double x1 = from.locX, x2 = stone.getX();
+        double z1 = from.locZ, z2 = stone.getZ();
+        Vec3D between = new Vec3D((x2 - x1) / 2, from.locY, (z2 - z1) / 2);
+        return new BlockPosition(from.locX + between.x, from.locY, from.locZ + between.z);
+
+
+    }
 }

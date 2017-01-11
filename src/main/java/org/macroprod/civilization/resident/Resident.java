@@ -245,7 +245,7 @@ public abstract class Resident extends ResidentAdapter {
 
     /**
      * Called upon NPC loading
-     * TODO look at EntityList to consider loading correct resident class on load otherwise we'll always load a settler
+     * TODO look at EntityList to consider loading correct resident class on loadSpigot otherwise we'll always loadSpigot a settler
      */
     public void loadData(NBTTagCompound nbt) {
         /**

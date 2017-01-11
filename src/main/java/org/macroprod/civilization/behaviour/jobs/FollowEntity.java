@@ -20,16 +20,19 @@ public class FollowEntity extends Job {
 
     @Override
     public void run() {
-        this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Blocks.CHEST));
+        if(!resident.getInventory().hasEmptySlot()) {
+            resident.getHandler().prepend(new ChestStorage(resident));
+        } else {
+            this.resident.setSlot(EnumItemSlot.MAINHAND, new ItemStack(Blocks.CHEST));
 
-        Optional<Entity> entity = this.resident.world.entityList.stream().filter(e -> (e.getName().contains(target) || e.getCustomName().contains(target))
-                && Calculations.distance(resident, e) < 50).findAny();
-        if (entity.isPresent()) {
-            Entity kevin = entity.get();
-            if(Calculations.distance(kevin, this.resident) > 5)
-                this.resident.getNavigation().a(kevin.locX + getRandom(-3, 3), kevin.locY, kevin.locZ + getRandom(-3, 3), 0.7f);
+            Optional<Entity> entity = this.resident.world.entityList.stream().filter(e -> (e.getName().contains(target) || e.getCustomName().contains(target))
+                    && Calculations.distance(resident, e) < 50).findAny();
+            if (entity.isPresent()) {
+                Entity kevin = entity.get();
+                if (Calculations.distance(kevin, this.resident) > 5)
+                    this.resident.getNavigation().a(kevin.locX + getRandom(-3, 3), kevin.locY, kevin.locZ + getRandom(-3, 3), 0.7f);
+            }
         }
-
     }
 
     public int getRandom(int lower, int upper) {

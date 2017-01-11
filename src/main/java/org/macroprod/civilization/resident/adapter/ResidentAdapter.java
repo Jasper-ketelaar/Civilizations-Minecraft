@@ -102,7 +102,7 @@ public abstract class ResidentAdapter extends EntityVillager {
      */
     @Override
     public InventorySubcontainer dm() {
-        return forward.getInventory();
+        return forward.getRawInventory();
     }
 
     /**
